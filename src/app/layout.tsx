@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GME Competitor Dashboard",
-  description: "Competitive intelligence dashboard for GME — track reviews, news, and rankings across competitors.",
+  title: "Competitors Analysis",
+  description: "Competitive intelligence dashboard — track reviews, news, and rankings across competitors.",
 };
 
 export default function RootLayout({

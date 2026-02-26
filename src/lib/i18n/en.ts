@@ -82,8 +82,12 @@ const en: Record<string, string> = {
   'empty.competitors': 'No competitors found. Run the scrapers to populate data.',
 
   // Sidebar
-  'sidebar.title': 'GME Dashboard',
-  'sidebar.footer': 'GME Competitor Dashboard',
+  'sidebar.title': 'Competitors Analysis',
+  'sidebar.footer': 'Competitors Analysis',
+
+  // Overview sections
+  'overview.competitors': 'Competitors',
+  'overview.benchmarks': 'Other Competitors & Benchmarks',
 };
 
 export default en;

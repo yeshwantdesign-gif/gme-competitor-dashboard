@@ -82,8 +82,12 @@ const ko: Record<string, string> = {
   'empty.competitors': '경쟁사를 찾을 수 없습니다. 스크래퍼를 실행하여 데이터를 채워주세요.',
 
   // Sidebar
-  'sidebar.title': 'GME 대시보드',
-  'sidebar.footer': 'GME 경쟁사 대시보드',
+  'sidebar.title': '경쟁사 분석',
+  'sidebar.footer': '경쟁사 분석',
+
+  // Overview sections
+  'overview.competitors': '경쟁사',
+  'overview.benchmarks': '기타 경쟁사 및 벤치마크',
 };
 
 export default ko;

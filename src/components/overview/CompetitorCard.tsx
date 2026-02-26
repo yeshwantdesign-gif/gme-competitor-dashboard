@@ -6,8 +6,56 @@ import { CompetitorLogo } from '@/components/shared/CompetitorLogo';
 import { useT } from '@/lib/i18n';
 import type { CompetitorSummary } from '@/types';
 
-export function CompetitorCard({ competitor }: { competitor: CompetitorSummary }) {
+interface Props {
+  competitor: CompetitorSummary;
+  featured?: boolean;
+}
+
+export function CompetitorCard({ competitor, featured }: Props) {
   const { t } = useT();
+
+  if (featured) {
+    return (
+      <Link href={`/company/${competitor.slug}`}>
+        <div className="rounded-lg border border-primary/40 bg-card p-6 hover:border-primary/70 transition-colors cursor-pointer">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <CompetitorLogo iconUrl={competitor.icon_url} name={competitor.name} size="lg" />
+            <div className="flex-1 min-w-0">
+              <h3 className="text-xl font-bold text-card-foreground">{competitor.name}</h3>
+              <span className="text-sm text-muted-foreground">{competitor.type}</span>
+            </div>
+
+            <div className="flex flex-wrap gap-6 text-sm">
+              {competitor.play_store_rating != null && (
+                <div>
+                  <span className="text-xs text-muted-foreground block mb-0.5">{t('card.playStore')}</span>
+                  <StarRating rating={competitor.play_store_rating} size={14} />
+                </div>
+              )}
+              {competitor.app_store_rating != null && (
+                <div>
+                  <span className="text-xs text-muted-foreground block mb-0.5">{t('card.appStore')}</span>
+                  <StarRating rating={competitor.app_store_rating} size={14} />
+                </div>
+              )}
+              <div>
+                <span className="text-xs text-muted-foreground block mb-0.5">{t('card.playStore')}</span>
+                <span className="text-sm font-medium">{competitor.play_store_downloads ?? 'N/A'}</span>
+              </div>
+              <div>
+                <span className="text-xs text-muted-foreground block mb-0.5">{t('card.reviews')}</span>
+                <span className="text-sm font-medium">{competitor.recent_reviews_count}</span>
+              </div>
+              <div>
+                <span className="text-xs text-muted-foreground block mb-0.5">{t('card.news')}</span>
+                <span className="text-sm font-medium">{competitor.recent_news_count}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Link>
+    );
+  }
 
   return (
     <Link href={`/company/${competitor.slug}`}>
