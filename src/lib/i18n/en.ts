@@ -88,6 +88,10 @@ const en: Record<string, string> = {
   // Overview sections
   'overview.competitors': 'Competitors',
   'overview.benchmarks': 'Other Competitors & Benchmarks',
+
+  // Rankings sections
+  'rankings.remittanceCompetitors': 'Remittance Competitors',
+  'rankings.benchmarks': 'Other Competitors & Benchmarks',
 };
 
 export default en;

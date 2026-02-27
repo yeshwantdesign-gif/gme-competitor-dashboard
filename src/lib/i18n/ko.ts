@@ -88,6 +88,10 @@ const ko: Record<string, string> = {
   // Overview sections
   'overview.competitors': '경쟁사',
   'overview.benchmarks': '기타 경쟁사 및 벤치마크',
+
+  // Rankings sections
+  'rankings.remittanceCompetitors': '송금 경쟁사',
+  'rankings.benchmarks': '기타 경쟁사 및 벤치마크',
 };
 
 export default ko;

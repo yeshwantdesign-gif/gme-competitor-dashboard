@@ -6,7 +6,12 @@ import { useT } from '@/lib/i18n';
 import { useCompetitorColors } from '@/hooks/useCompetitorColors';
 import type { RankingEntry } from '@/types';
 
-export function ComparisonChart({ rankings }: { rankings: RankingEntry[] }) {
+interface ChartProps {
+  rankings: RankingEntry[];
+  title?: string;
+}
+
+export function ComparisonChart({ rankings, title }: ChartProps) {
   const { t } = useT();
 
   const filtered = useMemo(
@@ -39,8 +44,8 @@ export function ComparisonChart({ rankings }: { rankings: RankingEntry[] }) {
 
   return (
     <div className="rounded-lg border border-border bg-card p-4">
-      <h3 className="text-sm font-medium mb-4">{t('ranking.ratingComparison')}</h3>
-      <ResponsiveContainer width="100%" height={400}>
+      <h3 className="text-sm font-medium mb-4">{title ?? t('ranking.ratingComparison')}</h3>
+      <ResponsiveContainer width="100%" height={Math.max(200, data.length * 36 + 60)}>
         <BarChart data={data} layout="vertical" margin={{ left: 80 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
           <XAxis type="number" domain={[0, 5]} tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
