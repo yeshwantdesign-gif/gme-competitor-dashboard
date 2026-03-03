@@ -7,7 +7,7 @@ import {
   MessageSquare,
   Newspaper,
   RefreshCw,
-  Trophy,
+  // Trophy,
   X,
 } from "lucide-react";
 
@@ -24,7 +24,7 @@ const navItems = [
   { labelKey: "nav.reviews", href: "/reviews", icon: MessageSquare },
   { labelKey: "nav.news", href: "/news", icon: Newspaper },
   { labelKey: "nav.updates", href: "/updates", icon: RefreshCw },
-  { labelKey: "nav.rankings", href: "/rankings", icon: Trophy },
+  // { labelKey: "nav.rankings", href: "/rankings", icon: Trophy },
 ];
 
 export function Sidebar({ open, onClose }: SidebarProps) {
