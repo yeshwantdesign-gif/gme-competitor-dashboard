@@ -273,23 +273,49 @@ export async function scrapePlayStore(): Promise<{ processed: number; errors: st
             .eq('id', comp.id);
         }
 
+        // Fetch structured app data via google-play-scraper for reliable version info
+        let gplayVersion: string | null = null;
+        let gplayReleaseDate: string | null = null;
+        let gplayReleaseNotes: string | null = null;
+        try {
+          const gplayData = await gplay.app({
+            appId: comp.play_store_id,
+            lang: 'ko',
+            country: 'kr',
+          });
+          gplayVersion = gplayData.version ?? null;
+          gplayReleaseDate = gplayData.updated
+            ? new Date(gplayData.updated).toISOString()
+            : null;
+          gplayReleaseNotes = gplayData.recentChanges ?? null;
+        } catch (gplayErr: any) {
+          console.warn(`[Play Store] gplay.app() failed for ${comp.name}: ${gplayErr.message}`);
+        }
+
+        // Use google-play-scraper data if available, fallback to Playwright data
+        const finalVersion = gplayVersion || appData.version;
+        const finalReleaseDate = gplayReleaseDate || appData.releaseDate;
+        const finalReleaseNotes = gplayReleaseNotes || appData.releaseNotes;
+
         // Upsert app update record
-        if (appData.version) {
+        if (finalVersion) {
           const { error: updateError } = await supabaseAdmin
             .from('app_updates')
             .upsert(
               {
                 competitor_id: comp.id,
                 store: 'android',
-                version: appData.version,
-                release_date: appData.releaseDate,
-                release_notes: appData.releaseNotes,
+                version: finalVersion,
+                release_date: finalReleaseDate,
+                release_notes: finalReleaseNotes,
                 scraped_at: new Date().toISOString(),
               },
               { onConflict: 'competitor_id,store,version', ignoreDuplicates: true }
             );
           if (updateError) {
             errors.push(`${comp.slug}: app_updates upsert failed - ${updateError.message}`);
+          } else {
+            console.log(`[Play Store] App update: ${comp.name} v${finalVersion} (${finalReleaseDate ? new Date(finalReleaseDate).toLocaleDateString() : 'no date'})`);
           }
         }
 

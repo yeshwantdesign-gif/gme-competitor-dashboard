@@ -9,9 +9,12 @@ import {
   Tooltip,
   ResponsiveContainer,
   ZAxis,
+  ReferenceArea,
 } from 'recharts';
 import { useT } from '@/lib/i18n';
 import type { AppUpdate } from '@/types';
+
+const GME_NAME = 'GME Remittance';
 
 interface TimelinePoint {
   x: number; // timestamp
@@ -47,17 +50,28 @@ function CustomTooltip({ active, payload }: any) {
 export function UpdateFrequencyChart({ updates }: { updates: AppUpdate[] }) {
   const { t } = useT();
 
-  // Build competitor name list (ordered by first appearance)
+  // Build competitor name list — GME Remittance always first
   const competitorNames: string[] = [];
   const nameIndexMap = new Map<string, number>();
 
+  // Collect all unique names
+  const allNames = new Set<string>();
   updates.forEach((u) => {
-    const name = u.competitors?.name ?? 'Unknown';
-    if (!nameIndexMap.has(name)) {
-      nameIndexMap.set(name, competitorNames.length);
-      competitorNames.push(name);
-    }
+    allNames.add(u.competitors?.name ?? 'Unknown');
   });
+
+  // Put GME first, then rest alphabetically
+  if (allNames.has(GME_NAME)) {
+    nameIndexMap.set(GME_NAME, 0);
+    competitorNames.push(GME_NAME);
+    allNames.delete(GME_NAME);
+  }
+  Array.from(allNames).sort().forEach((name) => {
+    nameIndexMap.set(name, competitorNames.length);
+    competitorNames.push(name);
+  });
+
+  const gmeIndex = nameIndexMap.get(GME_NAME);
 
   // Build scatter points split by store
   const androidPoints: TimelinePoint[] = [];
@@ -93,7 +107,7 @@ export function UpdateFrequencyChart({ updates }: { updates: AppUpdate[] }) {
   const allTs = [...androidPoints, ...iosPoints].map((p) => p.x);
   const minTs = Math.min(...allTs);
   const maxTs = Math.max(...allTs);
-  const padding = Math.max((maxTs - minTs) * 0.05, 86400000); // at least 1 day padding
+  const padding = Math.max((maxTs - minTs) * 0.05, 86400000);
 
   const chartHeight = Math.max(300, competitorNames.length * 36 + 60);
 
@@ -115,6 +129,20 @@ export function UpdateFrequencyChart({ updates }: { updates: AppUpdate[] }) {
       <ResponsiveContainer width="100%" height={chartHeight}>
         <ScatterChart margin={{ top: 10, right: 20, bottom: 10, left: 10 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+
+          {/* Highlight GME Remittance row */}
+          {gmeIndex !== undefined && (
+            <ReferenceArea
+              y1={gmeIndex - 0.45}
+              y2={gmeIndex + 0.45}
+              fill="hsl(var(--primary))"
+              fillOpacity={0.08}
+              stroke="hsl(var(--primary))"
+              strokeOpacity={0.2}
+              strokeDasharray="4 2"
+            />
+          )}
+
           <XAxis
             type="number"
             dataKey="x"
@@ -128,10 +156,13 @@ export function UpdateFrequencyChart({ updates }: { updates: AppUpdate[] }) {
             dataKey="y"
             domain={[-0.5, competitorNames.length - 0.5]}
             ticks={competitorNames.map((_, i) => i)}
-            tickFormatter={(val: number) => competitorNames[val] ?? ''}
+            tickFormatter={(val: number) => {
+              const name = competitorNames[val] ?? '';
+              return name === GME_NAME ? `★ ${name}` : name;
+            }}
             tick={{ fontSize: 11 }}
             stroke="hsl(var(--muted-foreground))"
-            width={120}
+            width={140}
           />
           <ZAxis range={[60, 60]} />
           <Tooltip content={<CustomTooltip />} />
