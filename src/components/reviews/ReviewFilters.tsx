@@ -5,62 +5,54 @@ import type { CompetitorSummary } from '@/types';
 
 interface Props {
   competitors: CompetitorSummary[];
-  selectedCompetitor: string;
-  selectedStore: string;
-  selectedScore: string;
-  onCompetitorChange: (id: string) => void;
-  onStoreChange: (store: string) => void;
-  onScoreChange: (score: string) => void;
+  selectedCompetitors: string[];
+  onCompetitorChange: (ids: string[]) => void;
 }
 
 export function ReviewFilters({
   competitors,
-  selectedCompetitor,
-  selectedStore,
-  selectedScore,
+  selectedCompetitors,
   onCompetitorChange,
-  onStoreChange,
-  onScoreChange,
 }: Props) {
   const { t } = useT();
+  const allSelected = selectedCompetitors.length === 0;
+
+  function toggle(id: string) {
+    if (selectedCompetitors.includes(id)) {
+      onCompetitorChange(selectedCompetitors.filter((c) => c !== id));
+    } else {
+      onCompetitorChange([...selectedCompetitors, id]);
+    }
+  }
 
   return (
-    <div className="flex flex-wrap gap-3">
-      <select
-        value={selectedCompetitor}
-        onChange={(e) => onCompetitorChange(e.target.value)}
-        className="rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground"
+    <div className="flex flex-wrap gap-2">
+      <button
+        onClick={() => onCompetitorChange([])}
+        className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
+          allSelected
+            ? 'border-primary bg-primary text-primary-foreground'
+            : 'border-border bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+        }`}
       >
-        <option value="">{t('filter.allCompanies')}</option>
-        {competitors.map((c) => (
-          <option key={c.id} value={c.id}>
+        {t('filter.allCompanies')}
+      </button>
+      {competitors.map((c) => {
+        const active = selectedCompetitors.includes(c.id);
+        return (
+          <button
+            key={c.id}
+            onClick={() => toggle(c.id)}
+            className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
+              active
+                ? 'border-primary bg-primary text-primary-foreground'
+                : 'border-border bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            }`}
+          >
             {c.name}
-          </option>
-        ))}
-      </select>
-
-      <select
-        value={selectedStore}
-        onChange={(e) => onStoreChange(e.target.value)}
-        className="rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground"
-      >
-        <option value="">{t('filter.allStores')}</option>
-        <option value="android">{t('filter.android')}</option>
-        <option value="ios">{t('filter.ios')}</option>
-      </select>
-
-      <select
-        value={selectedScore}
-        onChange={(e) => onScoreChange(e.target.value)}
-        className="rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground"
-      >
-        <option value="">{t('filter.allRatings')}</option>
-        <option value="5">{t('filter.stars', { n: 5 })}</option>
-        <option value="4">{t('filter.stars', { n: 4 })}</option>
-        <option value="3">{t('filter.stars', { n: 3 })}</option>
-        <option value="2">{t('filter.stars', { n: 2 })}</option>
-        <option value="1">{t('filter.star', { n: 1 })}</option>
-      </select>
+          </button>
+        );
+      })}
     </div>
   );
 }

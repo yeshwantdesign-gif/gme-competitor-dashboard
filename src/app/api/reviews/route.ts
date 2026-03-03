@@ -3,7 +3,7 @@ import { supabaseAnon } from '@/lib/supabase/server';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
-  const competitorId = searchParams.get('competitor_id');
+  const competitorIds = searchParams.get('competitor_ids');
   const store = searchParams.get('store');
   const minScore = searchParams.get('min_score');
   const maxScore = searchParams.get('max_score');
@@ -14,7 +14,14 @@ export async function GET(request: NextRequest) {
     .from('reviews')
     .select('*, competitors!inner(name, slug, icon_url)', { count: 'exact' });
 
-  if (competitorId) query = query.eq('competitor_id', competitorId);
+  if (competitorIds) {
+    const ids = competitorIds.split(',').filter(Boolean);
+    if (ids.length === 1) {
+      query = query.eq('competitor_id', ids[0]);
+    } else if (ids.length > 1) {
+      query = query.in('competitor_id', ids);
+    }
+  }
   if (store) query = query.eq('store', store);
   if (minScore) query = query.gte('score', parseInt(minScore));
   if (maxScore) query = query.lte('score', parseInt(maxScore));

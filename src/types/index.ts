@@ -104,7 +104,7 @@ export interface PaginatedResponse<T> {
 }
 
 export interface ReviewFilters {
-  competitor_id?: string;
+  competitor_ids?: string[];
   store?: 'android' | 'ios';
   min_score?: number;
   max_score?: number;

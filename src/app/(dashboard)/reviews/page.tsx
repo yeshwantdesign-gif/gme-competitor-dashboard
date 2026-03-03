@@ -11,18 +11,13 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useT } from '@/lib/i18n';
 
 export default function ReviewsPage() {
-  const [competitorId, setCompetitorId] = useState('');
-  const [store, setStore] = useState('');
-  const [score, setScore] = useState('');
+  const [competitorIds, setCompetitorIds] = useState<string[]>([]);
   const [page, setPage] = useState(1);
   const { t } = useT();
 
   const { competitors } = useCompetitors();
   const { reviews, totalPages, isLoading } = useReviews({
-    competitor_id: competitorId || undefined,
-    store: store || undefined,
-    min_score: score ? parseInt(score) : undefined,
-    max_score: score ? parseInt(score) : undefined,
+    competitor_ids: competitorIds.length > 0 ? competitorIds : undefined,
     page,
   });
 
@@ -32,12 +27,8 @@ export default function ReviewsPage() {
 
       <ReviewFilters
         competitors={competitors}
-        selectedCompetitor={competitorId}
-        selectedStore={store}
-        selectedScore={score}
-        onCompetitorChange={(v) => { setCompetitorId(v); setPage(1); }}
-        onStoreChange={(v) => { setStore(v); setPage(1); }}
-        onScoreChange={(v) => { setScore(v); setPage(1); }}
+        selectedCompetitors={competitorIds}
+        onCompetitorChange={(ids) => { setCompetitorIds(ids); setPage(1); }}
       />
 
       {isLoading ? (

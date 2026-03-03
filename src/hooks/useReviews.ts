@@ -4,7 +4,7 @@ import type { Review, PaginatedResponse } from '@/types';
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export function useReviews(params: {
-  competitor_id?: string;
+  competitor_ids?: string[];
   store?: string;
   min_score?: number;
   max_score?: number;
@@ -12,7 +12,9 @@ export function useReviews(params: {
   pageSize?: number;
 }) {
   const searchParams = new URLSearchParams();
-  if (params.competitor_id) searchParams.set('competitor_id', params.competitor_id);
+  if (params.competitor_ids && params.competitor_ids.length > 0) {
+    searchParams.set('competitor_ids', params.competitor_ids.join(','));
+  }
   if (params.store) searchParams.set('store', params.store);
   if (params.min_score) searchParams.set('min_score', String(params.min_score));
   if (params.max_score) searchParams.set('max_score', String(params.max_score));
