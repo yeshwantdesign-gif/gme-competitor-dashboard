@@ -3,7 +3,7 @@ import { supabaseAnon } from '@/lib/supabase/server';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
-  const competitorId = searchParams.get('competitor_id');
+  const competitorIds = searchParams.get('competitor_ids');
   const dateFrom = searchParams.get('date_from');
   const dateTo = searchParams.get('date_to');
   const page = parseInt(searchParams.get('page') || '1');
@@ -13,7 +13,14 @@ export async function GET(request: NextRequest) {
     .from('news_articles')
     .select('*, competitors!inner(name, slug, icon_url)', { count: 'exact' });
 
-  if (competitorId) query = query.eq('competitor_id', competitorId);
+  if (competitorIds) {
+    const ids = competitorIds.split(',').filter(Boolean);
+    if (ids.length === 1) {
+      query = query.eq('competitor_id', ids[0]);
+    } else if (ids.length > 1) {
+      query = query.in('competitor_id', ids);
+    }
+  }
   if (dateFrom) query = query.gte('published_at', dateFrom);
   if (dateTo) query = query.lte('published_at', dateTo);
 

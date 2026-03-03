@@ -4,14 +4,16 @@ import type { NewsArticle, PaginatedResponse } from '@/types';
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export function useNews(params: {
-  competitor_id?: string;
+  competitor_ids?: string[];
   date_from?: string;
   date_to?: string;
   page?: number;
   pageSize?: number;
 }) {
   const searchParams = new URLSearchParams();
-  if (params.competitor_id) searchParams.set('competitor_id', params.competitor_id);
+  if (params.competitor_ids && params.competitor_ids.length > 0) {
+    searchParams.set('competitor_ids', params.competitor_ids.join(','));
+  }
   if (params.date_from) searchParams.set('date_from', params.date_from);
   if (params.date_to) searchParams.set('date_to', params.date_to);
   searchParams.set('page', String(params.page ?? 1));

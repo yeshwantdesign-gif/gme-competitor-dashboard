@@ -113,7 +113,7 @@ export interface ReviewFilters {
 }
 
 export interface NewsFilters {
-  competitor_id?: string;
+  competitor_ids?: string[];
   date_from?: string;
   date_to?: string;
   page?: number;
@@ -132,8 +132,7 @@ export interface AppUpdate {
 }
 
 export interface UpdateFilters {
-  competitor_id?: string;
-  store?: 'android' | 'ios';
+  competitor_ids?: string[];
   page?: number;
   pageSize?: number;
 }

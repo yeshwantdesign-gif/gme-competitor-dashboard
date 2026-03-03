@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useUpdates } from '@/hooks/useUpdates';
 import { useCompetitors } from '@/hooks/useCompetitors';
 import { UpdateCard } from '@/components/updates/UpdateCard';
@@ -13,24 +13,32 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useT } from '@/lib/i18n';
 
 export default function UpdatesPage() {
-  const [competitorId, setCompetitorId] = useState('');
-  const [store, setStore] = useState('');
+  const [competitorIds, setCompetitorIds] = useState<string[]>([]);
   const [page, setPage] = useState(1);
+  const initialized = useRef(false);
   const { t } = useT();
 
   const { competitors } = useCompetitors();
 
+  // Default-select "GME Remittance" once competitors load
+  useEffect(() => {
+    if (initialized.current || competitors.length === 0) return;
+    const gme = competitors.find((c) => c.name === 'GME Remittance');
+    if (gme) {
+      setCompetitorIds([gme.id]);
+      initialized.current = true;
+    }
+  }, [competitors]);
+
   // Fetch all updates for charts/KPI (no pagination)
   const { updates: allUpdates, isLoading: allLoading } = useUpdates({
-    competitor_id: competitorId || undefined,
-    store: store || undefined,
+    competitor_ids: competitorIds.length > 0 ? competitorIds : undefined,
     pageSize: 500,
   });
 
   // Fetch paginated updates for timeline feed
   const { updates, totalPages, isLoading } = useUpdates({
-    competitor_id: competitorId || undefined,
-    store: store || undefined,
+    competitor_ids: competitorIds.length > 0 ? competitorIds : undefined,
     page,
   });
 
@@ -54,10 +62,8 @@ export default function UpdatesPage() {
       {/* Filters */}
       <UpdateFilters
         competitors={competitors}
-        selectedCompetitor={competitorId}
-        selectedStore={store}
-        onCompetitorChange={(v) => { setCompetitorId(v); setPage(1); }}
-        onStoreChange={(v) => { setStore(v); setPage(1); }}
+        selectedCompetitors={competitorIds}
+        onCompetitorChange={(ids) => { setCompetitorIds(ids); setPage(1); }}
       />
 
       {/* Timeline feed */}

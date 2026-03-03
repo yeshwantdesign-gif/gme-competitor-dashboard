@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNews } from '@/hooks/useNews';
 import { useCompetitors } from '@/hooks/useCompetitors';
 import { NewsCard } from '@/components/news/NewsCard';
@@ -11,15 +11,26 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useT } from '@/lib/i18n';
 
 export default function NewsPage() {
-  const [competitorId, setCompetitorId] = useState('');
+  const [competitorIds, setCompetitorIds] = useState<string[]>([]);
   const [page, setPage] = useState(1);
+  const initialized = useRef(false);
   const { t } = useT();
 
   const { competitors } = useCompetitors();
   const { articles, totalPages, isLoading } = useNews({
-    competitor_id: competitorId || undefined,
+    competitor_ids: competitorIds.length > 0 ? competitorIds : undefined,
     page,
   });
+
+  // Default-select "GME Remittance" once competitors load
+  useEffect(() => {
+    if (initialized.current || competitors.length === 0) return;
+    const gme = competitors.find((c) => c.name === 'GME Remittance');
+    if (gme) {
+      setCompetitorIds([gme.id]);
+      initialized.current = true;
+    }
+  }, [competitors]);
 
   return (
     <div className="space-y-6">
@@ -27,8 +38,8 @@ export default function NewsPage() {
 
       <NewsFilters
         competitors={competitors}
-        selectedCompetitor={competitorId}
-        onCompetitorChange={(v) => { setCompetitorId(v); setPage(1); }}
+        selectedCompetitors={competitorIds}
+        onCompetitorChange={(ids) => { setCompetitorIds(ids); setPage(1); }}
       />
 
       {isLoading ? (
