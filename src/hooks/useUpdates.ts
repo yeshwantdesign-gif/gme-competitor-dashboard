@@ -5,6 +5,7 @@ const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export function useUpdates(params: {
   competitor_ids?: string[];
+  date_from?: string;
   store?: string;
   page?: number;
   pageSize?: number;
@@ -13,6 +14,7 @@ export function useUpdates(params: {
   if (params.competitor_ids && params.competitor_ids.length > 0) {
     searchParams.set('competitor_ids', params.competitor_ids.join(','));
   }
+  if (params.date_from) searchParams.set('date_from', params.date_from);
   if (params.store) searchParams.set('store', params.store);
   searchParams.set('page', String(params.page ?? 1));
   searchParams.set('pageSize', String(params.pageSize ?? 20));

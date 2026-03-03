@@ -46,10 +46,16 @@ const ko: Record<string, string> = {
   'ranking.ratingComparison': '평점 비교 (상위 15개)',
   'ranking.noData': '비교할 평점 데이터가 없습니다.',
 
+  // Time filters
+  'filter.last7d': '최근 7일',
+  'filter.last30d': '최근 30일',
+  'filter.last90d': '최근 90일',
+  'filter.allTime': '전체 기간',
+
   // Updates
   'updates.daysSinceTitle': '마지막 업데이트 이후 일수',
   'updates.daysAgo': '일 전',
-  'updates.frequency': '업데이트 빈도 (월별)',
+  'updates.frequency': '업데이트 타임라인',
   'updates.noChartData': '차트에 표시할 업데이트 데이터가 없습니다.',
   'updates.noMatch': '필터와 일치하는 앱 업데이트가 없습니다.',
 

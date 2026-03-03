@@ -46,10 +46,16 @@ const en: Record<string, string> = {
   'ranking.ratingComparison': 'Rating Comparison (Top 15)',
   'ranking.noData': 'No rating data available for comparison.',
 
+  // Time filters
+  'filter.last7d': 'Last 7 Days',
+  'filter.last30d': 'Last 30 Days',
+  'filter.last90d': 'Last 90 Days',
+  'filter.allTime': 'All Time',
+
   // Updates
   'updates.daysSinceTitle': 'Days Since Last Update',
   'updates.daysAgo': 'days ago',
-  'updates.frequency': 'Update Frequency (by month)',
+  'updates.frequency': 'Update Timeline',
   'updates.noChartData': 'No update data available for chart.',
   'updates.noMatch': 'No app updates match your filters.',
 

@@ -4,6 +4,7 @@ import { supabaseAnon } from '@/lib/supabase/server';
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const competitorIds = searchParams.get('competitor_ids');
+  const dateFrom = searchParams.get('date_from');
   const page = parseInt(searchParams.get('page') || '1');
   const pageSize = parseInt(searchParams.get('pageSize') || '20');
 
@@ -19,6 +20,8 @@ export async function GET(request: NextRequest) {
       query = query.in('competitor_id', ids);
     }
   }
+
+  if (dateFrom) query = query.gte('release_date', dateFrom);
 
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;

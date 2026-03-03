@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useUpdates } from '@/hooks/useUpdates';
 import { useCompetitors } from '@/hooks/useCompetitors';
 import { UpdateCard } from '@/components/updates/UpdateCard';
-import { UpdateFilters } from '@/components/updates/UpdateFilters';
+import { UpdateFilters, type TimePeriod } from '@/components/updates/UpdateFilters';
 import { UpdateFrequencyChart } from '@/components/updates/UpdateFrequencyChart';
 import { DaysSinceUpdateCards } from '@/components/updates/DaysSinceUpdateCards';
 import { EmptyState } from '@/components/shared/EmptyState';
@@ -12,8 +12,17 @@ import { PageSkeleton } from '@/components/shared/PageSkeleton';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useT } from '@/lib/i18n';
 
+function periodToDateFrom(period: TimePeriod): string | undefined {
+  if (period === 'all') return undefined;
+  const now = new Date();
+  const days = period === '7d' ? 7 : period === '30d' ? 30 : 90;
+  now.setDate(now.getDate() - days);
+  return now.toISOString().split('T')[0];
+}
+
 export default function UpdatesPage() {
   const [competitorIds, setCompetitorIds] = useState<string[]>([]);
+  const [period, setPeriod] = useState<TimePeriod>('7d');
   const [page, setPage] = useState(1);
   const initialized = useRef(false);
   const { t } = useT();
@@ -30,21 +39,34 @@ export default function UpdatesPage() {
     }
   }, [competitors]);
 
+  const dateFrom = useMemo(() => periodToDateFrom(period), [period]);
+
   // Fetch all updates for charts/KPI (no pagination)
   const { updates: allUpdates, isLoading: allLoading } = useUpdates({
     competitor_ids: competitorIds.length > 0 ? competitorIds : undefined,
+    date_from: dateFrom,
     pageSize: 500,
   });
 
   // Fetch paginated updates for timeline feed
   const { updates, totalPages, isLoading } = useUpdates({
     competitor_ids: competitorIds.length > 0 ? competitorIds : undefined,
+    date_from: dateFrom,
     page,
   });
 
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">{t('page.updates')}</h1>
+
+      {/* Filters */}
+      <UpdateFilters
+        competitors={competitors}
+        selectedCompetitors={competitorIds}
+        onCompetitorChange={(ids) => { setCompetitorIds(ids); setPage(1); }}
+        selectedPeriod={period}
+        onPeriodChange={(p) => { setPeriod(p); setPage(1); }}
+      />
 
       {/* KPI: Days since last update */}
       {!allLoading && allUpdates.length > 0 && (
@@ -54,17 +76,10 @@ export default function UpdatesPage() {
         </div>
       )}
 
-      {/* Update frequency chart */}
+      {/* Update timeline chart */}
       {!allLoading && allUpdates.length > 0 && (
         <UpdateFrequencyChart updates={allUpdates} />
       )}
-
-      {/* Filters */}
-      <UpdateFilters
-        competitors={competitors}
-        selectedCompetitors={competitorIds}
-        onCompetitorChange={(ids) => { setCompetitorIds(ids); setPage(1); }}
-      />
 
       {/* Timeline feed */}
       {isLoading ? (
