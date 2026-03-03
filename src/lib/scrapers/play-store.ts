@@ -1,4 +1,5 @@
 import { chromium, type Browser, type Page } from 'playwright';
+import gplay from 'google-play-scraper';
 import { supabaseAdmin } from '../supabase/server';
 
 interface PlayStoreData {
@@ -290,6 +291,36 @@ export async function scrapePlayStore(): Promise<{ processed: number; errors: st
           if (updateError) {
             errors.push(`${comp.slug}: app_updates upsert failed - ${updateError.message}`);
           }
+        }
+
+        // Fetch Play Store reviews using google-play-scraper
+        try {
+          console.log(`[Play Store] Fetching reviews for ${comp.name}...`);
+          const reviewsResult = await gplay.reviews({
+            appId: comp.play_store_id,
+            sort: gplay.sort.NEWEST,
+            num: 20,
+            lang: 'ko',
+            country: 'kr',
+          });
+
+          const reviewsData = reviewsResult.data;
+          if (reviewsData && reviewsData.length > 0) {
+            for (const r of reviewsData) {
+              await supabaseAdmin.from('reviews').insert({
+                competitor_id: comp.id,
+                store: 'android',
+                score: r.score ?? null,
+                text: r.text ?? null,
+                review_date: r.date ? new Date(r.date).toISOString() : null,
+                scraped_at: new Date().toISOString(),
+              });
+            }
+            console.log(`[Play Store] Inserted ${reviewsData.length} reviews for ${comp.name}`);
+          }
+        } catch (reviewErr: any) {
+          errors.push(`${comp.slug}: play store reviews fetch failed - ${reviewErr.message}`);
+          console.error(`[Play Store] Reviews error for ${comp.name}:`, reviewErr.message);
         }
       } catch (err: any) {
         errors.push(`${comp.slug}: ${err.message}`);

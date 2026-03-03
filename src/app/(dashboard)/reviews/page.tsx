@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useReviews } from '@/hooks/useReviews';
 import { useCompetitors } from '@/hooks/useCompetitors';
 import { ReviewCard } from '@/components/reviews/ReviewCard';
@@ -13,6 +13,7 @@ import { useT } from '@/lib/i18n';
 export default function ReviewsPage() {
   const [competitorIds, setCompetitorIds] = useState<string[]>([]);
   const [page, setPage] = useState(1);
+  const initialized = useRef(false);
   const { t } = useT();
 
   const { competitors } = useCompetitors();
@@ -20,6 +21,16 @@ export default function ReviewsPage() {
     competitor_ids: competitorIds.length > 0 ? competitorIds : undefined,
     page,
   });
+
+  // Default-select "GME Remittance" once competitors load
+  useEffect(() => {
+    if (initialized.current || competitors.length === 0) return;
+    const gme = competitors.find((c) => c.name === 'GME Remittance');
+    if (gme) {
+      setCompetitorIds([gme.id]);
+      initialized.current = true;
+    }
+  }, [competitors]);
 
   return (
     <div className="space-y-6">
