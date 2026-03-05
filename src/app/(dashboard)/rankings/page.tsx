@@ -11,17 +11,7 @@ import { TableSkeleton } from '@/components/shared/PageSkeleton';
 import { useT } from '@/lib/i18n';
 import Link from 'next/link';
 import type { RankingEntry, RankingSortBy } from '@/types';
-
-const GME_SLUG = 'gme';
-
-const COMPETITOR_SLUGS = new Set([
-  'hanpass', 'gmoney', 'e9pay', 'cross-remit', 'coinshot',
-  'debunk', 'jrf', 'moin', 'sbi-cosmoney', 'sentbe', 'utransfer',
-]);
-
-const BENCHMARK_SLUGS = new Set([
-  'kakaopay', 'naverpay', 'toss', 'wirebarley', 'wise', 'gln',
-]);
+import { GME_SLUG, COMPETITOR_SLUGS, BENCHMARK_SLUGS } from '@/lib/competitors/categorize';
 
 function categorize(rankings: RankingEntry[]) {
   let gme: RankingEntry | null = null;

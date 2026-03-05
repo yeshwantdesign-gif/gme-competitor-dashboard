@@ -17,7 +17,7 @@ const ko: Record<string, string> = {
   // Quick stats
   'stats.competitors': '경쟁사',
   'stats.avgRatingPlay': '평균 평점 (Play)',
-  'stats.reviews30d': '리뷰 (30일)',
+  'stats.reviews30d': '리뷰',
   'stats.news30d': '뉴스 (30일)',
 
   // Filter labels
@@ -68,7 +68,7 @@ const ko: Record<string, string> = {
   // Company detail
   'company.ratings': '평가',
   'company.downloads': '다운로드',
-  'company.reviews30d': '리뷰 (30일)',
+  'company.reviews30d': '리뷰',
   'company.news30d': '뉴스 기사 (30일)',
   'company.notFound': '회사를 찾을 수 없습니다.',
   'company.ratingHistory': '평점 이력',

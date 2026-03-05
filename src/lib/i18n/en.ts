@@ -17,7 +17,7 @@ const en: Record<string, string> = {
   // Quick stats
   'stats.competitors': 'Competitors',
   'stats.avgRatingPlay': 'Avg Rating (Play)',
-  'stats.reviews30d': 'Reviews (30d)',
+  'stats.reviews30d': 'Reviews',
   'stats.news30d': 'News (30d)',
 
   // Filter labels
@@ -68,7 +68,7 @@ const en: Record<string, string> = {
   // Company detail
   'company.ratings': 'ratings',
   'company.downloads': 'downloads',
-  'company.reviews30d': 'reviews (30d)',
+  'company.reviews30d': 'reviews',
   'company.news30d': 'news articles (30d)',
   'company.notFound': 'Company not found.',
   'company.ratingHistory': 'Rating History',

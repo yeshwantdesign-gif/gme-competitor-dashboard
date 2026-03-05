@@ -8,39 +8,7 @@ import { RefreshButton } from '@/components/shared/RefreshButton';
 import { PageSkeleton } from '@/components/shared/PageSkeleton';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { useT } from '@/lib/i18n';
-import type { CompetitorSummary } from '@/types';
-
-const GME_SLUG = 'gme';
-
-const COMPETITOR_SLUGS = new Set([
-  'hanpass', 'gmoney', 'e9pay', 'cross-remit', 'coinshot',
-  'debunk', 'jrf', 'moin', 'sbi-cosmoney', 'sentbe', 'utransfer',
-]);
-
-const BENCHMARK_SLUGS = new Set([
-  'kakaopay', 'naverpay', 'toss', 'wirebarley', 'wise', 'gln',
-]);
-
-function categorize(competitors: CompetitorSummary[]) {
-  let gme: CompetitorSummary | null = null;
-  const direct: CompetitorSummary[] = [];
-  const benchmarks: CompetitorSummary[] = [];
-
-  for (const c of competitors) {
-    if (c.slug === GME_SLUG) {
-      gme = c;
-    } else if (COMPETITOR_SLUGS.has(c.slug)) {
-      direct.push(c);
-    } else if (BENCHMARK_SLUGS.has(c.slug)) {
-      benchmarks.push(c);
-    } else {
-      // Any unknown competitor falls into benchmarks
-      benchmarks.push(c);
-    }
-  }
-
-  return { gme, direct, benchmarks };
-}
+import { categorize } from '@/lib/competitors/categorize';
 
 export default function OverviewPage() {
   const { competitors, isLoading, mutate } = useCompetitors();

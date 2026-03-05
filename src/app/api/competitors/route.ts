@@ -33,16 +33,15 @@ export async function GET() {
         .limit(1)
         .single();
 
-      // Recent reviews count (last 30 days)
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      // All-time reviews count
       const { count: recentReviews } = await supabaseAnon
         .from('reviews')
         .select('id', { count: 'exact', head: true })
-        .eq('competitor_id', comp.id)
-        .gte('review_date', thirtyDaysAgo.toISOString());
+        .eq('competitor_id', comp.id);
 
       // Recent news count (last 30 days)
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       const { count: recentNews } = await supabaseAnon
         .from('news_articles')
         .select('id', { count: 'exact', head: true })

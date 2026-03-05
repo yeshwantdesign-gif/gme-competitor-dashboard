@@ -41,6 +41,7 @@ export interface Review {
   text: string | null;
   review_date: string | null;
   scraped_at: string;
+  competitors?: { name: string; slug: string; icon_url?: string | null };
 }
 
 export interface NewsArticle {
@@ -51,6 +52,7 @@ export interface NewsArticle {
   source: string | null;
   published_at: string | null;
   snippet: string | null;
+  competitors?: { name: string; slug: string; icon_url?: string | null };
 }
 
 export interface ScrapeRun {

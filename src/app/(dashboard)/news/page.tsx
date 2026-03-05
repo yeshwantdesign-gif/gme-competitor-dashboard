@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useNews } from '@/hooks/useNews';
 import { useCompetitors } from '@/hooks/useCompetitors';
 import { NewsCard } from '@/components/news/NewsCard';
@@ -9,6 +9,7 @@ import { EmptyState } from '@/components/shared/EmptyState';
 import { PageSkeleton } from '@/components/shared/PageSkeleton';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useT } from '@/lib/i18n';
+import { categorizeItems } from '@/lib/competitors/categorize';
 
 export default function NewsPage() {
   const [competitorIds, setCompetitorIds] = useState<string[]>([]);
@@ -32,6 +33,8 @@ export default function NewsPage() {
     }
   }, [competitors]);
 
+  const sections = useMemo(() => categorizeItems(articles), [articles]);
+
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">{t('page.news')}</h1>
@@ -48,11 +51,40 @@ export default function NewsPage() {
         <EmptyState message={t('news.noMatch')} />
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {articles.map((article) => (
-              <NewsCard key={article.id} article={article} />
-            ))}
-          </div>
+          {/* Section 1: GME Remittance */}
+          {sections.gme.length > 0 && (
+            <section>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {sections.gme.map((article) => (
+                  <NewsCard key={article.id} article={article} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Section 2: Remittance Competitors */}
+          {sections.direct.length > 0 && (
+            <section>
+              <h2 className="text-lg font-semibold mb-4">{t('overview.competitors')}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {sections.direct.map((article) => (
+                  <NewsCard key={article.id} article={article} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Section 3: Other Competitors & Benchmarks */}
+          {sections.benchmarks.length > 0 && (
+            <section>
+              <h2 className="text-lg font-semibold mb-4">{t('overview.benchmarks')}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {sections.benchmarks.map((article) => (
+                  <NewsCard key={article.id} article={article} />
+                ))}
+              </div>
+            </section>
+          )}
 
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-4">
