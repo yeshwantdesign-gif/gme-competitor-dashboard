@@ -1,14 +1,60 @@
 'use client';
 
 import Link from 'next/link';
-import { StarRating } from '@/components/shared/StarRating';
+import { RefreshCw, Newspaper, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { CompetitorLogo } from '@/components/shared/CompetitorLogo';
 import { useT } from '@/lib/i18n';
-import type { CompetitorSummary } from '@/types';
+import type { OverviewCompetitor } from '@/types';
 
 interface Props {
-  competitor: CompetitorSummary;
+  competitor: OverviewCompetitor;
   featured?: boolean;
+}
+
+function DownloadsTrend({ current, previous }: { current: string | null; previous: string | null }) {
+  if (!current) return <span className="text-sm text-muted-foreground">N/A</span>;
+
+  const label = current;
+
+  if (!previous) {
+    return <span className="text-sm font-medium">{label}</span>;
+  }
+
+  const curr = parseDownloads(current);
+  const prev = parseDownloads(previous);
+
+  if (curr > prev) {
+    return (
+      <span className="inline-flex items-center gap-1 text-sm font-medium text-green-500">
+        <TrendingUp size={14} />
+        {label}
+      </span>
+    );
+  }
+  if (curr < prev) {
+    return (
+      <span className="inline-flex items-center gap-1 text-sm font-medium text-red-500">
+        <TrendingDown size={14} />
+        {label}
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground">
+      <Minus size={14} />
+      {label}
+    </span>
+  );
+}
+
+function parseDownloads(s: string): number {
+  const cleaned = s.replace(/[^0-9.+,kmb만천억]/gi, '').toLowerCase();
+  const num = parseFloat(cleaned.replace(/[^0-9.]/g, ''));
+  if (isNaN(num)) return 0;
+  if (/b|억/.test(cleaned)) return num * 1_000_000_000;
+  if (/m|만/.test(cleaned)) return num * 1_000_000;
+  if (/k|천/.test(cleaned)) return num * 1_000;
+  return num;
 }
 
 export function CompetitorCard({ competitor, featured }: Props) {
@@ -26,29 +72,26 @@ export function CompetitorCard({ competitor, featured }: Props) {
             </div>
 
             <div className="flex flex-wrap gap-6 text-sm">
-              {competitor.play_store_rating != null && (
-                <div>
-                  <span className="text-xs text-muted-foreground block mb-0.5">{t('card.playStore')}</span>
-                  <StarRating rating={competitor.play_store_rating} size={14} />
-                </div>
-              )}
-              {competitor.app_store_rating != null && (
-                <div>
-                  <span className="text-xs text-muted-foreground block mb-0.5">{t('card.appStore')}</span>
-                  <StarRating rating={competitor.app_store_rating} size={14} />
-                </div>
-              )}
               <div>
-                <span className="text-xs text-muted-foreground block mb-0.5">{t('card.playStore')}</span>
-                <span className="text-sm font-medium">{competitor.play_store_downloads ?? 'N/A'}</span>
+                <span className="text-xs text-muted-foreground block mb-0.5">{t('stats.updatesThisWeek')}</span>
+                <span className="inline-flex items-center gap-1 text-sm font-medium">
+                  <RefreshCw size={14} className="text-muted-foreground" />
+                  {competitor.app_updates_this_week}
+                </span>
               </div>
               <div>
-                <span className="text-xs text-muted-foreground block mb-0.5">{t('card.reviews')}</span>
-                <span className="text-sm font-medium">{competitor.recent_reviews_count}</span>
+                <span className="text-xs text-muted-foreground block mb-0.5">{t('stats.newsThisWeek')}</span>
+                <span className="inline-flex items-center gap-1 text-sm font-medium">
+                  <Newspaper size={14} className="text-muted-foreground" />
+                  {competitor.news_this_week}
+                </span>
               </div>
               <div>
-                <span className="text-xs text-muted-foreground block mb-0.5">{t('card.news')}</span>
-                <span className="text-sm font-medium">{competitor.recent_news_count}</span>
+                <span className="text-xs text-muted-foreground block mb-0.5">{t('stats.downloadsTrend')}</span>
+                <DownloadsTrend
+                  current={competitor.play_store_downloads}
+                  previous={competitor.prev_play_store_downloads}
+                />
               </div>
             </div>
           </div>
@@ -59,7 +102,7 @@ export function CompetitorCard({ competitor, featured }: Props) {
 
   return (
     <Link href={`/company/${competitor.slug}`}>
-      <div className="rounded-lg border border-border bg-card p-5 hover:border-primary/50 transition-colors cursor-pointer">
+      <div className="rounded-lg border border-border bg-card p-5 hover:border-primary/50 transition-colors cursor-pointer h-full">
         <div className="flex items-start justify-between mb-3">
           <div className="flex items-center gap-2">
             <CompetitorLogo iconUrl={competitor.icon_url} name={competitor.name} size="md" />
@@ -68,44 +111,31 @@ export function CompetitorCard({ competitor, featured }: Props) {
               <span className="text-xs text-muted-foreground">{competitor.type}</span>
             </div>
           </div>
-          <div className="flex gap-1">
-            {competitor.play_store_rating != null && (
-              <span className="inline-flex items-center rounded-full bg-green-500/10 px-2 py-0.5 text-xs text-green-400">
-                Android
-              </span>
-            )}
-            {competitor.app_store_rating != null && (
-              <span className="inline-flex items-center rounded-full bg-blue-500/10 px-2 py-0.5 text-xs text-blue-400">
-                iOS
-              </span>
-            )}
+        </div>
+
+        <div className="space-y-2 text-sm">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground flex items-center gap-1">
+              <RefreshCw size={12} />
+              {t('stats.updatesThisWeek')}
+            </span>
+            <span className="font-medium">{competitor.app_updates_this_week}</span>
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground flex items-center gap-1">
+              <Newspaper size={12} />
+              {t('stats.newsThisWeek')}
+            </span>
+            <span className="font-medium">{competitor.news_this_week}</span>
           </div>
         </div>
 
-        <div className="space-y-2">
-          {competitor.play_store_rating != null && (
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">{t('card.playStore')}</span>
-              <StarRating rating={competitor.play_store_rating} size={12} />
-            </div>
-          )}
-          {competitor.app_store_rating != null && (
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-muted-foreground">{t('card.appStore')}</span>
-              <StarRating rating={competitor.app_store_rating} size={12} />
-            </div>
-          )}
-        </div>
-
-        <div className="mt-3 pt-3 border-t border-border space-y-1 text-xs text-muted-foreground">
-          <div className="flex justify-between">
-            <span>{t('card.playStore')}: {competitor.play_store_downloads ?? 'N/A'}</span>
-            <span>{t('card.appStore')}: N/A</span>
-          </div>
-          <div className="flex justify-between">
-            <span>{competitor.recent_reviews_count} {t('card.reviews')}</span>
-            <span>{competitor.recent_news_count} {t('card.news')}</span>
-          </div>
+        <div className="mt-3 pt-3 border-t border-border">
+          <span className="text-xs text-muted-foreground block mb-0.5">{t('stats.downloadsTrend')}</span>
+          <DownloadsTrend
+            current={competitor.play_store_downloads}
+            previous={competitor.prev_play_store_downloads}
+          />
         </div>
       </div>
     </Link>

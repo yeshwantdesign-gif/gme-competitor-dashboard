@@ -140,3 +140,30 @@ export interface UpdateFilters {
 }
 
 export type RankingSortBy = 'play_store_rating' | 'app_store_rating' | 'combined_rating' | 'total_ratings' | 'play_store_downloads';
+
+export interface OverviewCompetitor {
+  id: string;
+  slug: string;
+  name: string;
+  type: string;
+  icon_url?: string | null;
+  play_store_rating: number | null;
+  play_store_ratings_count: number | null;
+  play_store_downloads: string | null;
+  prev_play_store_downloads: string | null;
+  app_store_rating: number | null;
+  app_store_ratings_count: number | null;
+  app_updates_this_week: number;
+  news_this_week: number;
+}
+
+export interface OverviewHighlights {
+  updates: (AppUpdate & { competitors: { name: string; slug: string; icon_url?: string | null } })[];
+  news: (NewsArticle & { competitors: { name: string; slug: string; icon_url?: string | null } })[];
+  reviews: (Review & { competitors: { name: string; slug: string; icon_url?: string | null } })[];
+}
+
+export interface OverviewData {
+  competitors: OverviewCompetitor[];
+  highlights: OverviewHighlights;
+}

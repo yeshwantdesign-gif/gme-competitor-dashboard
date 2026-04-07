@@ -19,6 +19,9 @@ const en: Record<string, string> = {
   'stats.avgRatingPlay': 'Avg Rating (Play)',
   'stats.reviews30d': 'Reviews',
   'stats.news30d': 'News (30d)',
+  'stats.updatesThisWeek': 'App Updates This Week',
+  'stats.newsThisWeek': 'News This Week',
+  'stats.downloadsTrend': 'Downloads Trend',
 
   // Filter labels
   'filter.allCompanies': 'All Companies',
@@ -94,6 +97,11 @@ const en: Record<string, string> = {
   // Overview sections
   'overview.competitors': 'Competitors',
   'overview.benchmarks': 'Other Competitors & Benchmarks',
+  'overview.weeklySummary': 'Weekly Summary',
+  'overview.noHighlights': 'No highlights this week.',
+  'overview.newAppUpdates': 'New App Updates',
+  'overview.topNews': 'Top News',
+  'overview.notableReviews': 'Notable Reviews',
 
   // Rankings sections
   'rankings.remittanceCompetitors': 'Remittance Competitors',

@@ -19,6 +19,9 @@ const ko: Record<string, string> = {
   'stats.avgRatingPlay': '평균 평점 (Play)',
   'stats.reviews30d': '리뷰',
   'stats.news30d': '뉴스 (30일)',
+  'stats.updatesThisWeek': '이번 주 앱 업데이트',
+  'stats.newsThisWeek': '이번 주 뉴스',
+  'stats.downloadsTrend': '다운로드 추이',
 
   // Filter labels
   'filter.allCompanies': '전체 회사',
@@ -94,6 +97,11 @@ const ko: Record<string, string> = {
   // Overview sections
   'overview.competitors': '경쟁사',
   'overview.benchmarks': '기타 경쟁사 및 벤치마크',
+  'overview.weeklySummary': '주간 요약',
+  'overview.noHighlights': '이번 주 하이라이트가 없습니다.',
+  'overview.newAppUpdates': '새로운 앱 업데이트',
+  'overview.topNews': '주요 뉴스',
+  'overview.notableReviews': '주요 리뷰',
 
   // Rankings sections
   'rankings.remittanceCompetitors': '송금 경쟁사',

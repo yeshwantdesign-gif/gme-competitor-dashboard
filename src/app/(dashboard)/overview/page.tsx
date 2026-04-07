@@ -1,21 +1,41 @@
 'use client';
 
 import { useMemo } from 'react';
-import { useCompetitors } from '@/hooks/useCompetitors';
+import { useOverview } from '@/hooks/useOverview';
 import { CompetitorCard } from '@/components/overview/CompetitorCard';
 import { QuickStatsBar } from '@/components/overview/QuickStatsBar';
+import { WeeklySummary } from '@/components/overview/WeeklySummary';
 import { RefreshButton } from '@/components/shared/RefreshButton';
 import { PageSkeleton } from '@/components/shared/PageSkeleton';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { useT } from '@/lib/i18n';
-import { categorize } from '@/lib/competitors/categorize';
+import { GME_SLUG, COMPETITOR_SLUGS, BENCHMARK_SLUGS } from '@/lib/competitors/categorize';
+import type { OverviewCompetitor } from '@/types';
+
+function categorizeOverview(competitors: OverviewCompetitor[]) {
+  let gme: OverviewCompetitor | null = null;
+  const direct: OverviewCompetitor[] = [];
+  const benchmarks: OverviewCompetitor[] = [];
+
+  for (const c of competitors) {
+    if (c.slug === GME_SLUG) {
+      gme = c;
+    } else if (COMPETITOR_SLUGS.has(c.slug)) {
+      direct.push(c);
+    } else {
+      benchmarks.push(c);
+    }
+  }
+
+  return { gme, direct, benchmarks };
+}
 
 export default function OverviewPage() {
-  const { competitors, isLoading, mutate } = useCompetitors();
+  const { competitors, highlights, isLoading, mutate } = useOverview();
   const { t } = useT();
 
   const { gme, direct, benchmarks } = useMemo(
-    () => categorize(competitors),
+    () => categorizeOverview(competitors),
     [competitors]
   );
 
@@ -27,6 +47,8 @@ export default function OverviewPage() {
         <h1 className="text-2xl font-bold">{t('page.overview')}</h1>
         <RefreshButton onRefresh={() => mutate()} />
       </div>
+
+      <WeeklySummary highlights={highlights} />
 
       <QuickStatsBar competitors={competitors} />
 
@@ -43,7 +65,7 @@ export default function OverviewPage() {
             </section>
           )}
 
-          {/* Section 2: Competitors */}
+          {/* Section 2: Remittance Competitors */}
           {direct.length > 0 && (
             <section>
               <h2 className="text-lg font-semibold mb-4">{t('overview.competitors')}</h2>
