@@ -85,12 +85,16 @@ export async function GET() {
     .order('release_date', { ascending: false })
     .limit(5);
 
-  const { data: recentNews } = await supabaseAnon
+  // Fetch extra news to allow for deduplication
+  const { data: rawNews } = await supabaseAnon
     .from('news_articles')
     .select('*, competitors!inner(name, slug, icon_url)')
     .gte('published_at', weekStr)
     .order('published_at', { ascending: false })
-    .limit(5);
+    .limit(20);
+
+  // Deduplicate news by normalized title
+  const recentNews = deduplicateNews(rawNews ?? []).slice(0, 5);
 
   const { data: notableReviews } = await supabaseAnon
     .from('reviews')
@@ -103,8 +107,33 @@ export async function GET() {
     competitors: summaries,
     highlights: {
       updates: recentUpdates ?? [],
-      news: recentNews ?? [],
+      news: recentNews,
       reviews: notableReviews ?? [],
     },
+  });
+}
+
+function normalizeTitle(title: string): string {
+  return title.toLowerCase().replace(/[^a-z0-9가-힣]/g, '');
+}
+
+function similarity(a: string, b: string): number {
+  if (a === b) return 1;
+  const longer = a.length > b.length ? a : b;
+  const shorter = a.length > b.length ? b : a;
+  if (longer.length === 0) return 1;
+  if (longer.includes(shorter)) return shorter.length / longer.length;
+  return 0;
+}
+
+function deduplicateNews<T extends { title: string }>(articles: T[]): T[] {
+  const seen: string[] = [];
+  return articles.filter((article) => {
+    const norm = normalizeTitle(article.title);
+    for (const prev of seen) {
+      if (similarity(norm, prev) > 0.6) return false;
+    }
+    seen.push(norm);
+    return true;
   });
 }

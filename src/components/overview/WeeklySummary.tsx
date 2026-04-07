@@ -8,6 +8,16 @@ interface Props {
   highlights: OverviewHighlights;
 }
 
+function stripHtml(html: string): string {
+  return html.replace(/<[^>]*>/g, ' ').replace(/&[a-z]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function truncate(text: string, max: number): string {
+  const clean = stripHtml(text);
+  if (clean.length <= max) return clean;
+  return clean.slice(0, max) + '…';
+}
+
 export function WeeklySummary({ highlights }: Props) {
   const { t } = useT();
   const { updates, news, reviews } = highlights;
@@ -38,7 +48,7 @@ export function WeeklySummary({ highlights }: Props) {
                       {' — v'}
                       {u.version}
                       {u.release_notes && (
-                        <span className="text-muted-foreground"> — {u.release_notes.slice(0, 80)}{u.release_notes.length > 80 ? '…' : ''}</span>
+                        <span className="text-muted-foreground"> — {truncate(u.release_notes, 150)}</span>
                       )}
                     </span>
                   </li>
@@ -86,7 +96,7 @@ export function WeeklySummary({ highlights }: Props) {
                       <span className="text-muted-foreground"> ({r.score}★)</span>
                     )}
                     {r.text && (
-                      <span className="text-muted-foreground"> — {r.text.slice(0, 100)}{r.text.length > 100 ? '…' : ''}</span>
+                      <span className="text-muted-foreground"> — {truncate(r.text, 150)}</span>
                     )}
                   </li>
                 ))}
