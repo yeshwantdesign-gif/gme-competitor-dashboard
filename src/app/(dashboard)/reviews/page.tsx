@@ -5,11 +5,12 @@ import { useReviews } from '@/hooks/useReviews';
 import { useCompetitors } from '@/hooks/useCompetitors';
 import { ReviewCard } from '@/components/reviews/ReviewCard';
 import { ReviewFilters } from '@/components/reviews/ReviewFilters';
+import { CompetitorInfoCard } from '@/components/reviews/CompetitorInfoCard';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { PageSkeleton } from '@/components/shared/PageSkeleton';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useT } from '@/lib/i18n';
-import { categorizeItems } from '@/lib/competitors/categorize';
+import { categorize, categorizeItems } from '@/lib/competitors/categorize';
 
 export default function ReviewsPage() {
   const [competitorIds, setCompetitorIds] = useState<string[]>([]);
@@ -33,11 +34,47 @@ export default function ReviewsPage() {
     }
   }, [competitors]);
 
+  const { gme, direct, benchmarks } = useMemo(
+    () => categorize(competitors),
+    [competitors]
+  );
+
   const sections = useMemo(() => categorizeItems(reviews), [reviews]);
 
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">{t('page.reviews')}</h1>
+
+      {/* Competitor overview cards */}
+      {competitors.length > 0 && (
+        <div className="space-y-4">
+          {gme && (
+            <div className="grid grid-cols-1">
+              <CompetitorInfoCard competitor={gme} featured />
+            </div>
+          )}
+          {direct.length > 0 && (
+            <section>
+              <h2 className="text-lg font-semibold mb-3">{t('overview.competitors')}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {direct.map((comp) => (
+                  <CompetitorInfoCard key={comp.id} competitor={comp} />
+                ))}
+              </div>
+            </section>
+          )}
+          {benchmarks.length > 0 && (
+            <section>
+              <h2 className="text-lg font-semibold mb-3">{t('overview.benchmarks')}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {benchmarks.map((comp) => (
+                  <CompetitorInfoCard key={comp.id} competitor={comp} />
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+      )}
 
       <ReviewFilters
         competitors={competitors}
