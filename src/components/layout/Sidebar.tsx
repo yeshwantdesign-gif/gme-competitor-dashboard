@@ -8,6 +8,7 @@ import {
   Newspaper,
   RefreshCw,
   // Trophy,
+  Building2,
   X,
 } from "lucide-react";
 
@@ -24,6 +25,7 @@ const navItems = [
   { labelKey: "nav.reviews", href: "/reviews", icon: MessageSquare },
   { labelKey: "nav.news", href: "/news", icon: Newspaper },
   { labelKey: "nav.updates", href: "/updates", icon: RefreshCw },
+  { labelKey: "nav.dart", href: "/dart", icon: Building2 },
   // { labelKey: "nav.rankings", href: "/rankings", icon: Trophy },
 ];
 

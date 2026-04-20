@@ -5,6 +5,7 @@ const en: Record<string, string> = {
   'nav.news': 'News',
   'nav.updates': 'Updates',
   'nav.rankings': 'Rankings',
+  'nav.dart': 'DART Financial',
 
   // Page titles
   'page.overview': 'Overview',
@@ -12,6 +13,7 @@ const en: Record<string, string> = {
   'page.news': 'News',
   'page.updates': 'App Updates',
   'page.rankings': 'Rankings',
+  'page.dart': 'DART Financial Analysis',
   'page.dashboard': 'Dashboard',
 
   // Quick stats
@@ -102,6 +104,22 @@ const en: Record<string, string> = {
   'overview.newAppUpdates': 'New App Updates',
   'overview.topNews': 'Top News',
   'overview.notableReviews': 'Notable Reviews',
+
+  // DART
+  'dart.revenueChart': 'Revenue Trend (KRW)',
+  'dart.profitChart': 'Operating Profit Comparison (KRW)',
+  'dart.employeeChart': 'Employee Count Trends',
+  'dart.growthTable': 'Financial Summary',
+  'dart.company': 'Company',
+  'dart.revenue': 'Revenue',
+  'dart.operatingProfit': 'Op. Profit',
+  'dart.netIncome': 'Net Income',
+  'dart.totalAssets': 'Total Assets',
+  'dart.primaryCompetitors': 'Primary Competitors',
+  'dart.secondaryCompanies': 'Secondary Companies',
+  'dart.employeeTrends': 'Employee Count Trends',
+  'dart.noData': 'No DART financial data available. Click refresh to fetch data from OpenDART.',
+  'dart.noEmployeeData': 'No employee count data available.',
 
   // Rankings sections
   'rankings.remittanceCompetitors': 'Remittance Competitors',

@@ -139,6 +139,34 @@ export interface UpdateFilters {
   pageSize?: number;
 }
 
+export interface DartFinancial {
+  id: string;
+  corp_code: string;
+  corp_name: string;
+  stock_code: string | null;
+  bsns_year: number;
+  reprt_code: string;
+  fs_div: string;
+  revenue: number | null;
+  operating_profit: number | null;
+  net_income: number | null;
+  total_assets: number | null;
+  total_liabilities: number | null;
+  total_equity: number | null;
+  employee_count: number | null;
+  fetched_at: string;
+}
+
+export interface DartCorpCode {
+  id: string;
+  corp_code: string;
+  corp_name: string;
+  corp_name_eng: string | null;
+  stock_code: string | null;
+  competitor_id: string | null;
+  created_at: string;
+}
+
 export type RankingSortBy = 'play_store_rating' | 'app_store_rating' | 'combined_rating' | 'total_ratings' | 'play_store_downloads';
 
 export interface OverviewCompetitor {

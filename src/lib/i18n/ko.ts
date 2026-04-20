@@ -5,6 +5,7 @@ const ko: Record<string, string> = {
   'nav.news': '뉴스',
   'nav.updates': '업데이트',
   'nav.rankings': '순위',
+  'nav.dart': 'DART 재무정보',
 
   // Page titles
   'page.overview': '개요',
@@ -12,6 +13,7 @@ const ko: Record<string, string> = {
   'page.news': '뉴스',
   'page.updates': '앱 업데이트',
   'page.rankings': '순위',
+  'page.dart': 'DART 재무분석',
   'page.dashboard': '대시보드',
 
   // Quick stats
@@ -102,6 +104,22 @@ const ko: Record<string, string> = {
   'overview.newAppUpdates': '새로운 앱 업데이트',
   'overview.topNews': '주요 뉴스',
   'overview.notableReviews': '주요 리뷰',
+
+  // DART
+  'dart.revenueChart': '매출액 추이 (원)',
+  'dart.profitChart': '영업이익 비교 (원)',
+  'dart.employeeChart': '직원 수 추이',
+  'dart.growthTable': '재무 요약',
+  'dart.company': '회사',
+  'dart.revenue': '매출액',
+  'dart.operatingProfit': '영업이익',
+  'dart.netIncome': '당기순이익',
+  'dart.totalAssets': '자산총계',
+  'dart.primaryCompetitors': '주요 경쟁사',
+  'dart.secondaryCompanies': '기타 회사',
+  'dart.employeeTrends': '직원 수 추이',
+  'dart.noData': 'DART 재무 데이터가 없습니다. 새로고침을 클릭하여 OpenDART에서 데이터를 가져오세요.',
+  'dart.noEmployeeData': '직원 수 데이터가 없습니다.',
 
   // Rankings sections
   'rankings.remittanceCompetitors': '송금 경쟁사',
