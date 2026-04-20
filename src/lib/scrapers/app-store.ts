@@ -27,13 +27,7 @@ export async function scrapeAppStore(): Promise<{ processed: number; errors: str
       console.log(`[App Store] Scraping ${comp.name}...`);
 
       let appData: any;
-      if (appId) {
-        appData = await store.app({ id: appId });
-      } else if (comp.app_store_name) {
-        appData = await store.app({ appId: comp.app_store_name });
-      } else {
-        continue;
-      }
+      appData = await store.app({ id: appId });
 
       const { error: snapshotError } = await supabaseAdmin
         .from('app_store_snapshots')
@@ -80,9 +74,7 @@ export async function scrapeAppStore(): Promise<{ processed: number; errors: str
 
       // Fetch reviews
       try {
-        const opts: any = { page: 1, sort: store.sort.RECENT };
-        if (appId) opts.id = appId;
-        else if (comp.app_store_name) opts.appId = comp.app_store_name;
+        const opts: any = { page: 1, sort: store.sort.RECENT, id: appId };
 
         const reviewsData = await store.reviews(opts);
 
