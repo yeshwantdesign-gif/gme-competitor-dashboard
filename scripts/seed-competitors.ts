@@ -13,15 +13,18 @@ async function main() {
   console.log(`Seeding ${competitors.length} competitors...`);
 
   for (const c of competitors) {
+    const row: Record<string, unknown> = {
+      slug: c.slug,
+      name: c.name,
+      play_store_id: c.playStoreId,
+      app_store_id: c.appStoreId,
+      news_keywords: c.newsKeywords,
+    };
+    // Only include country if the table has that column
+    if ('country' in c) row.country = c.country;
+
     const { error } = await supabase.from('competitors').upsert(
-      {
-        slug: c.slug,
-        name: c.name,
-        country: c.country,
-        play_store_id: c.playStoreId,
-        app_store_id: c.appStoreId,
-        news_keywords: c.newsKeywords,
-      },
+      row,
       { onConflict: 'slug' }
     );
 

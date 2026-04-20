@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabaseAdmin } from '@/lib/supabase/server';
+import { createClient } from '@supabase/supabase-js';
 import { fetchCorpCodes, fetchFinancialStatement } from '@/lib/dart/client';
 import { DART_COMPANIES, REPRT_CODES } from '@/lib/dart/config';
+
+// Create a fresh client each request to avoid stale schema cache
+function freshAdmin() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+}
 
 export const maxDuration = 120; // Allow up to 2 minutes
 
@@ -33,14 +41,20 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      // Then try search terms
+      // Then try search terms — prefer exact match, then partial
       if (!found) {
         for (const term of company.searchTerms) {
-          const entry = allCorpCodes.find((e) =>
-            e.corp_name.includes(term) || e.corp_name === term
-          );
-          if (entry) {
-            matched.push({ company, corpCode: entry.corp_code, corpName: entry.corp_name, stockCode: entry.stock_code });
+          // Try exact match first
+          const exact = allCorpCodes.find((e) => e.corp_name === term);
+          if (exact) {
+            matched.push({ company, corpCode: exact.corp_code, corpName: exact.corp_name, stockCode: exact.stock_code });
+            found = true;
+            break;
+          }
+          // Fall back to partial match
+          const partial = allCorpCodes.find((e) => e.corp_name.includes(term));
+          if (partial) {
+            matched.push({ company, corpCode: partial.corp_code, corpName: partial.corp_name, stockCode: partial.stock_code });
             found = true;
             break;
           }
@@ -54,7 +68,7 @@ export async function POST(request: NextRequest) {
 
     // Step 2: Save corp code mappings
     for (const m of matched) {
-      await supabaseAdmin.from('dart_corp_codes').upsert(
+      await freshAdmin().from('dart_corp_codes').upsert(
         {
           corp_code: m.corpCode,
           corp_name: m.corpName,
@@ -80,7 +94,7 @@ export async function POST(request: NextRequest) {
             continue;
           }
 
-          const { error } = await supabaseAdmin.from('dart_financials').upsert(
+          const { error } = await freshAdmin().from('dart_financials').upsert(
             {
               corp_code: m.corpCode,
               corp_name: m.corpName,

@@ -7,7 +7,7 @@ export async function scrapeAppStore(): Promise<{ processed: number; errors: str
 
   const { data: dbCompetitors, error: dbError } = await supabaseAdmin
     .from('competitors')
-    .select('id, slug, name, app_store_id, app_store_name, icon_url');
+    .select('id, slug, name, app_store_id, icon_url');
 
   if (dbError || !dbCompetitors) {
     throw new Error(`Failed to fetch competitors from DB: ${dbError?.message}`);
@@ -21,8 +21,7 @@ export async function scrapeAppStore(): Promise<{ processed: number; errors: str
       if (isNaN(appId)) appId = null;
     }
 
-    // If no numeric ID, try looking up by app_store_name
-    if (!appId && !comp.app_store_name) continue;
+    if (!appId) continue;
 
     try {
       console.log(`[App Store] Scraping ${comp.name}...`);

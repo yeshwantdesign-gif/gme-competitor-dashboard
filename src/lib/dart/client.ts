@@ -148,17 +148,17 @@ export async function fetchCorpCodes(): Promise<CorpCodeEntry[]> {
 
   const xmlText = await xmlFile.async('text');
 
-  // Parse XML manually (simple regex parsing for known structure)
+  // Parse XML — multiline with corp_eng_name field
   const entries: CorpCodeEntry[] = [];
-  const corpRegex = /<list>\s*<corp_code>([^<]*)<\/corp_code>\s*<corp_name>([^<]*)<\/corp_name>\s*<stock_code>([^<]*)<\/stock_code>\s*<modify_date>[^<]*<\/modify_date>\s*<\/list>/g;
+  const corpRegex = /<list>\s*<corp_code>([^<]*)<\/corp_code>\s*<corp_name>([^<]*)<\/corp_name>\s*<corp_eng_name>([^<]*)<\/corp_eng_name>\s*<stock_code>([^<]*)<\/stock_code>\s*<modify_date>[^<]*<\/modify_date>\s*<\/list>/g;
 
   let match;
   while ((match = corpRegex.exec(xmlText)) !== null) {
     entries.push({
       corp_code: match[1].trim(),
       corp_name: match[2].trim(),
-      corp_name_eng: '',
-      stock_code: match[3].trim(),
+      corp_name_eng: match[3].trim(),
+      stock_code: match[4].trim(),
     });
   }
 
