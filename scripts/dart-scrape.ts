@@ -12,6 +12,7 @@ const pool = new Pool({
 });
 
 const DART_COMPANIES = [
+  { name: 'GME Remittance', nameKo: '글로벌머니익스프레스', searchTerms: ['글로벌머니익스프레스'], category: 'primary' },
   { name: 'Hanpass', nameKo: '한패스', stockCode: '408470', searchTerms: ['한패스'], category: 'primary' },
   { name: 'GMoney Transfer', nameKo: '지머니트랜스', searchTerms: ['지머니트랜스'], category: 'primary' },
   { name: 'E9Pay', nameKo: '이나인페이', searchTerms: ['이나인페이'], category: 'primary' },

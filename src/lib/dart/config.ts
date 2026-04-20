@@ -11,6 +11,9 @@ export interface DartCompany {
 }
 
 export const DART_COMPANIES: DartCompany[] = [
+  // GME Remittance (parent company)
+  { slug: 'gme', name: 'GME Remittance', nameKo: '글로벌머니익스프레스', searchTerms: ['글로벌머니익스프레스'], category: 'primary' },
+
   // Primary Competitors
   { slug: 'hanpass', name: 'Hanpass', nameKo: '한패스', stockCode: '408470', searchTerms: ['한패스'], category: 'primary' },
   { slug: 'gmoney', name: 'GMoney Transfer', nameKo: '지머니트랜스', searchTerms: ['지머니트랜스'], category: 'primary' },
