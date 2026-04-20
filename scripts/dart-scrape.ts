@@ -19,6 +19,7 @@ const DART_COMPANIES = [
   { name: 'Kakao Pay', nameKo: '카카오페이', stockCode: '377300', searchTerms: ['카카오페이'], category: 'secondary' },
   { name: 'Toss', nameKo: '비바리퍼블리카', searchTerms: ['비바리퍼블리카'], category: 'secondary' },
   { name: 'Naver Pay', nameKo: '네이버파이낸셜', searchTerms: ['네이버파이낸셜'], category: 'secondary' },
+  { name: 'Naver', nameKo: '네이버', stockCode: '035420', searchTerms: ['NAVER'], category: 'secondary' },
   { name: 'GLN', nameKo: '지엘엔인터내셔널', searchTerms: ['지엘엔인터내셔널'], category: 'secondary' },
 ];
 

@@ -22,6 +22,7 @@ export const DART_COMPANIES: DartCompany[] = [
   { slug: 'kakaopay', name: 'Kakao Pay', nameKo: '카카오페이', stockCode: '377300', searchTerms: ['카카오페이'], category: 'secondary' },
   { slug: 'toss', name: 'Toss', nameKo: '비바리퍼블리카', searchTerms: ['비바리퍼블리카'], category: 'secondary' },
   { slug: 'naverpay', name: 'Naver Pay', nameKo: '네이버파이낸셜', searchTerms: ['네이버파이낸셜'], category: 'secondary' },
+  { slug: 'naverpay', name: 'Naver', nameKo: '네이버', stockCode: '035420', searchTerms: ['NAVER'], category: 'secondary' },
   { slug: 'gln', name: 'GLN', nameKo: '지엘엔인터내셔널', searchTerms: ['지엘엔인터내셔널'], category: 'secondary' },
   // MOIN, UTransfer, Debunk — not registered in DART (or name mismatch)
 ];
