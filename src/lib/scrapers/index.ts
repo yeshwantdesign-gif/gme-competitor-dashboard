@@ -1,6 +1,5 @@
 import { scrapePlayStore } from './play-store';
 import { scrapeAppStore } from './app-store';
-import { scrapeGoogleNews } from './google-news';
 import { supabaseAdmin } from '../supabase/server';
 
 interface ScraperResult {
@@ -99,26 +98,9 @@ export async function runAppStoreScraper(): Promise<ScraperResult> {
   }
 }
 
-export async function runNewsScraper(): Promise<ScraperResult> {
-  const runId = await createScrapeRun('news');
-  console.log(`[Scraper] News run started: ${runId}`);
-
-  try {
-    const result = await scrapeGoogleNews();
-    await completeScrapeRun(runId, result.processed, result.errors);
-    console.log(`[Scraper] News run completed: ${result.processed} processed, ${result.errors.length} errors`);
-    return { ...result, scrapeRunId: runId };
-  } catch (err: any) {
-    await failScrapeRun(runId, err.message);
-    console.error(`[Scraper] News run failed:`, err.message);
-    return { processed: 0, errors: [err.message], scrapeRunId: runId };
-  }
-}
-
 export async function runAllScrapers(): Promise<{
   playStore: ScraperResult;
   appStore: ScraperResult;
-  news: ScraperResult;
   scrapeRunId: string;
 }> {
   const runId = await createScrapeRun('all');
@@ -138,13 +120,10 @@ export async function runAllScrapers(): Promise<{
   totalProcessed += appStore.processed;
   allErrors.push(...appStore.errors.map((e) => `[app_store] ${e}`));
 
-  console.log('\n=== News Scraping ===');
-  const news = await runNewsScraper();
-  totalProcessed += news.processed;
-  allErrors.push(...news.errors.map((e) => `[news] ${e}`));
+  // News scraping is handled by AWS Lambda writing directly to Supabase
 
   await completeScrapeRun(runId, totalProcessed, allErrors);
   console.log(`\n[Scraper] Full run completed: ${totalProcessed} total processed, ${allErrors.length} total errors`);
 
-  return { playStore, appStore, news, scrapeRunId: runId };
+  return { playStore, appStore, scrapeRunId: runId };
 }

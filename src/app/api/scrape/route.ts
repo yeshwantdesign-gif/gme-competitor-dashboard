@@ -4,7 +4,7 @@ export async function POST(request: NextRequest) {
   const { type } = await request.json().catch(() => ({ type: 'all' }));
 
   // Dynamically import to avoid loading scrapers at module level
-  const { runAllScrapers, runPlayStoreScraper, runAppStoreScraper, runNewsScraper } =
+  const { runAllScrapers, runPlayStoreScraper, runAppStoreScraper } =
     await import('@/lib/scrapers/index');
 
   let result;
@@ -14,9 +14,6 @@ export async function POST(request: NextRequest) {
       break;
     case 'app_store':
       result = await runAppStoreScraper();
-      break;
-    case 'news':
-      result = await runNewsScraper();
       break;
     default:
       result = await runAllScrapers();
