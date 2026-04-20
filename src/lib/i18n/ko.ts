@@ -56,6 +56,7 @@ const ko: Record<string, string> = {
   'filter.last30d': '최근 30일',
   'filter.last90d': '최근 90일',
   'filter.allTime': '전체 기간',
+  'filter.customRange': '기간 설정',
 
   // Updates
   'updates.daysSinceTitle': '마지막 업데이트 이후 일수',

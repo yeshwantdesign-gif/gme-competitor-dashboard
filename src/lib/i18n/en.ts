@@ -56,6 +56,7 @@ const en: Record<string, string> = {
   'filter.last30d': 'Last 30 Days',
   'filter.last90d': 'Last 90 Days',
   'filter.allTime': 'All Time',
+  'filter.customRange': 'Custom Range',
 
   // Updates
   'updates.daysSinceTitle': 'Days Since Last Update',

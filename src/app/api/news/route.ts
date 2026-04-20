@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAnon } from '@/lib/supabase/server';
+import { applyBlacklistFilter } from '@/lib/news-blacklist';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -23,6 +24,9 @@ export async function GET(request: NextRequest) {
   }
   if (dateFrom) query = query.gte('published_at', dateFrom);
   if (dateTo) query = query.lte('published_at', dateTo);
+
+  // Filter out sports/irrelevant articles
+  query = applyBlacklistFilter(query);
 
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;

@@ -4,22 +4,40 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { useNews } from '@/hooks/useNews';
 import { useCompetitors } from '@/hooks/useCompetitors';
 import { NewsCard } from '@/components/news/NewsCard';
-import { NewsFilters } from '@/components/news/NewsFilters';
+import { NewsFilters, type TimePeriod } from '@/components/news/NewsFilters';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { PageSkeleton } from '@/components/shared/PageSkeleton';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useT } from '@/lib/i18n';
 import { categorizeItems } from '@/lib/competitors/categorize';
 
+function periodToDateFrom(period: TimePeriod): string | undefined {
+  if (period === 'all' || period === 'custom') return undefined;
+  const now = new Date();
+  const days = period === '7d' ? 7 : period === '30d' ? 30 : 90;
+  now.setDate(now.getDate() - days);
+  return now.toISOString().split('T')[0];
+}
+
 export default function NewsPage() {
   const [competitorIds, setCompetitorIds] = useState<string[]>([]);
+  const [period, setPeriod] = useState<TimePeriod>('7d');
+  const [customFrom, setCustomFrom] = useState('');
+  const [customTo, setCustomTo] = useState('');
   const [page, setPage] = useState(1);
   const initialized = useRef(false);
   const { t } = useT();
 
   const { competitors } = useCompetitors();
+
+  // Compute effective date range
+  const dateFrom = period === 'custom' ? (customFrom || undefined) : periodToDateFrom(period);
+  const dateTo = period === 'custom' ? (customTo || undefined) : undefined;
+
   const { articles, totalPages, isLoading } = useNews({
     competitor_ids: competitorIds.length > 0 ? competitorIds : undefined,
+    date_from: dateFrom,
+    date_to: dateTo,
     page,
   });
 
@@ -43,6 +61,11 @@ export default function NewsPage() {
         competitors={competitors}
         selectedCompetitors={competitorIds}
         onCompetitorChange={(ids) => { setCompetitorIds(ids); setPage(1); }}
+        selectedPeriod={period}
+        onPeriodChange={(p) => { setPeriod(p); setPage(1); }}
+        customDateFrom={customFrom}
+        customDateTo={customTo}
+        onCustomDateChange={(from, to) => { setCustomFrom(from); setCustomTo(to); setPage(1); }}
       />
 
       {isLoading ? (
