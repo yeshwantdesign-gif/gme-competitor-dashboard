@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import type { DartFinancial, DartCorpCode } from '@/types';
+import type { DartFinancial, DartCorpCode, DartFinancialRatio } from '@/types';
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -25,6 +25,19 @@ export function useDartFinancials(params: {
     isLoading,
     isError: !!error,
     mutate,
+  };
+}
+
+export function useDartRatios() {
+  const { data, error, isLoading } = useSWR<{ data: DartFinancialRatio[] }>(
+    '/api/dart/ratios',
+    fetcher
+  );
+
+  return {
+    ratios: data?.data ?? [],
+    isLoading,
+    isError: !!error,
   };
 }
 

@@ -125,6 +125,49 @@ const ko: Record<string, string> = {
   // Rankings sections
   'rankings.remittanceCompetitors': '송금 경쟁사',
   'rankings.benchmarks': '기타 경쟁사 및 벤치마크',
+
+  // DART Action Plan
+  'dart.actionPlan': '액션 플랜 & 전략 분석',
+  'dart.competitiveComparison': '경쟁사 비교 (2025)',
+  'dart.ratioTrends': '비율 추이',
+  'dart.opMarginTrend': '영업이익률 추이 (%)',
+  'dart.debtEquityTrend': '부채비율 추이',
+  'dart.roeComparison': 'ROE 비교 (%)',
+  'dart.revenueGrowthComparison': '매출 성장률 비교 (%)',
+  'dart.gmeActionPlan': 'GME 액션 플랜',
+  'dart.lifecyclePosition': '기업 라이프사이클 포지션',
+  'dart.metric': '지표',
+
+  // Comparison table metrics
+  'dart.ratio.revenue': '매출액 (억원)',
+  'dart.ratio.opMargin': '영업이익률 (%)',
+  'dart.ratio.netMargin': '순이익률 (%)',
+  'dart.ratio.debtEquity': '부채비율',
+  'dart.ratio.roe': 'ROE (%)',
+  'dart.ratio.roa': 'ROA (%)',
+  'dart.ratio.assetTurnover': '자산회전율',
+  'dart.ratio.revGrowth': '매출성장률 (%)',
+
+  // Action plan cards
+  'dart.action.profitability.title': '수익성 격차',
+  'dart.action.profitability.priority': '우선순위 #1',
+  'dart.action.profitability.body': 'E9Pay 영업이익률 36.7% vs GME 11.9%. E9Pay의 비용 구조를 분석하여 3배 효율성 격차를 줄여야 합니다.',
+  'dart.action.leverage.title': '레버리지 리스크',
+  'dart.action.leverage.priority': '우선순위 #2',
+  'dart.action.leverage.body': 'GME 부채비율(4.74x)이 경쟁사 중 가장 높음. E9Pay(0.09x), GMoney(0.59x)는 거의 무차입. 부채 축소 전략이 필요합니다.',
+  'dart.action.growth.title': '성장 우위',
+  'dart.action.growth.priority': '기회',
+  'dart.action.growth.body': 'GME 성장률(26%)이 경쟁사 중 가장 빠름. GMoney 역성장(-5.5%), E9Pay 둔화(14.8%). 현재 성장세 유지 시 1-2년 내 GMoney 매출 추월 가능.',
+  'dart.action.efficiency.title': '효율성 경보',
+  'dart.action.efficiency.priority': '주의',
+  'dart.action.efficiency.body': '자산회전율 0.77→0.52 하락 중 — 자산 증가가 매출 증가보다 빠름. 자본 운용 효율성 개선 필요.',
+
+  // Lifecycle
+  'dart.lifecycle.e9pay': '현금 풍부한 성숙기 핀테크, 자본 배치 단계 진입',
+  'dart.lifecycle.gmoney': '성장 정점 후 둔화, 마진 압축',
+  'dart.lifecycle.hanpass': '공격적 성장 + IPO, 높은 레버리지',
+  'dart.lifecycle.gme': '빠른 성장이나 레버리지 상승, 효율성 하락',
+  'dart.lifecycle.sentbe': '구조조정 중, 여전히 적자',
 };
 
 export default ko;

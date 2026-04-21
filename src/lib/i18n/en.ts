@@ -125,6 +125,49 @@ const en: Record<string, string> = {
   // Rankings sections
   'rankings.remittanceCompetitors': 'Remittance Competitors',
   'rankings.benchmarks': 'Other Competitors & Benchmarks',
+
+  // DART Action Plan
+  'dart.actionPlan': 'Action Plan & Strategic Analysis',
+  'dart.competitiveComparison': 'Competitive Comparison (2025)',
+  'dart.ratioTrends': 'Ratio Trends',
+  'dart.opMarginTrend': 'Operating Margin Trend (%)',
+  'dart.debtEquityTrend': 'Debt-to-Equity Trend',
+  'dart.roeComparison': 'ROE Comparison (%)',
+  'dart.revenueGrowthComparison': 'Revenue Growth Comparison (%)',
+  'dart.gmeActionPlan': 'GME Action Plan',
+  'dart.lifecyclePosition': 'Company Lifecycle Position',
+  'dart.metric': 'Metric',
+
+  // Comparison table metrics
+  'dart.ratio.revenue': 'Revenue (B KRW)',
+  'dart.ratio.opMargin': 'Op. Margin (%)',
+  'dart.ratio.netMargin': 'Net Margin (%)',
+  'dart.ratio.debtEquity': 'Debt/Equity',
+  'dart.ratio.roe': 'ROE (%)',
+  'dart.ratio.roa': 'ROA (%)',
+  'dart.ratio.assetTurnover': 'Asset Turnover',
+  'dart.ratio.revGrowth': 'Revenue Growth (%)',
+
+  // Action plan cards
+  'dart.action.profitability.title': 'Profitability Gap',
+  'dart.action.profitability.priority': 'Priority #1',
+  'dart.action.profitability.body': 'E9Pay earns 36.7% operating margin vs GME\'s 11.9%. Study E9Pay\'s cost structure to close the 3x efficiency gap.',
+  'dart.action.leverage.title': 'Leverage Risk',
+  'dart.action.leverage.priority': 'Priority #2',
+  'dart.action.leverage.body': 'GME\'s debt-to-equity (4.74x) is the highest among all competitors. E9Pay (0.09x) and GMoney (0.59x) are nearly debt-free. Develop a deleveraging strategy.',
+  'dart.action.growth.title': 'Growth Advantage',
+  'dart.action.growth.priority': 'Opportunity',
+  'dart.action.growth.body': 'GME has the fastest growth rate (26%). GMoney is shrinking (-5.5%), E9Pay is slowing (14.8%). Maintain momentum to overtake GMoney within 1-2 years.',
+  'dart.action.efficiency.title': 'Efficiency Alert',
+  'dart.action.efficiency.priority': 'Watch',
+  'dart.action.efficiency.body': 'Asset turnover declining from 0.77 to 0.52 — assets growing faster than revenue. Improve capital deployment efficiency.',
+
+  // Lifecycle
+  'dart.lifecycle.e9pay': 'Cash-rich mature fintech, entering capital deployment phase',
+  'dart.lifecycle.gmoney': 'Post-peak slowdown, margin compression',
+  'dart.lifecycle.hanpass': 'Aggressive growth + IPO, heavily leveraged',
+  'dart.lifecycle.gme': 'Fast growth but rising leverage, efficiency declining',
+  'dart.lifecycle.sentbe': 'Restructuring, still unprofitable',
 };
 
 export default en;

@@ -167,6 +167,20 @@ export interface DartCorpCode {
   created_at: string;
 }
 
+export interface DartFinancialRatio {
+  id: string;
+  competitor_name: string;
+  year: number;
+  operating_margin: number | null;
+  net_margin: number | null;
+  revenue_growth: number | null;
+  debt_to_equity: number | null;
+  asset_turnover: number | null;
+  roe: number | null;
+  roa: number | null;
+  created_at: string;
+}
+
 export type RankingSortBy = 'play_store_rating' | 'app_store_rating' | 'combined_rating' | 'total_ratings' | 'play_store_downloads';
 
 export interface OverviewCompetitor {

@@ -1,12 +1,16 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { useDartFinancials, useDartCompanies } from '@/hooks/useDart';
+import { useDartFinancials, useDartCompanies, useDartRatios } from '@/hooks/useDart';
 import { DartFilters } from '@/components/dart/DartFilters';
 import { RevenueChart } from '@/components/dart/RevenueChart';
 import { ProfitChart } from '@/components/dart/ProfitChart';
 import { EmployeeChart } from '@/components/dart/EmployeeChart';
 import { GrowthTable } from '@/components/dart/GrowthTable';
+import { CompetitiveComparison } from '@/components/dart/CompetitiveComparison';
+import { RatioCharts } from '@/components/dart/RatioCharts';
+import { ActionPlanCards } from '@/components/dart/ActionPlanCards';
+import { LifecyclePosition } from '@/components/dart/LifecyclePosition';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { PageSkeleton } from '@/components/shared/PageSkeleton';
 import { RefreshButton } from '@/components/shared/RefreshButton';
@@ -21,6 +25,7 @@ export default function DartPage() {
   const { financials, isLoading, mutate } = useDartFinancials({
     corp_codes: selectedCorpCodes.length > 0 ? selectedCorpCodes : undefined,
   });
+  const { ratios, isLoading: ratiosLoading } = useDartRatios();
 
   // Split financials into primary and secondary based on DART_COMPANIES config
   const { primaryFinancials, secondaryFinancials } = useMemo(() => {
@@ -98,6 +103,35 @@ export default function DartPage() {
             <h2 className="text-lg font-semibold mb-4">{t('dart.employeeTrends')}</h2>
             <EmployeeChart financials={financials} />
           </section>
+
+          {/* Action Plan & Strategic Analysis */}
+          {!ratiosLoading && ratios.length > 0 && (
+            <>
+              <hr className="border-border" />
+              <section>
+                <h2 className="text-xl font-bold mb-6">{t('dart.actionPlan')}</h2>
+                <div className="space-y-8">
+                  {/* Section A: Competitive Comparison Table */}
+                  <CompetitiveComparison ratios={ratios} financials={primaryFinancials} />
+
+                  {/* Section B: Ratio Trend Charts */}
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">{t('dart.ratioTrends')}</h3>
+                    <RatioCharts ratios={ratios} />
+                  </div>
+
+                  {/* Section C: GME Action Plan */}
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">{t('dart.gmeActionPlan')}</h3>
+                    <ActionPlanCards />
+                  </div>
+
+                  {/* Section D: Company Lifecycle Position */}
+                  <LifecyclePosition />
+                </div>
+              </section>
+            </>
+          )}
         </div>
       )}
     </div>
