@@ -5,9 +5,8 @@ import {
   ResponsiveContainer, Legend,
 } from 'recharts';
 import type { DartFinancial } from '@/types';
-import { hashColor } from '@/lib/colors';
 import { useT } from '@/lib/i18n';
-import { formatKrwBillions } from './utils';
+import { formatKrwBillions, dartCompanyColor } from './utils';
 
 interface Props {
   financials: DartFinancial[];
@@ -58,7 +57,7 @@ export function RevenueChart({ financials }: Props) {
               key={company}
               type="monotone"
               dataKey={company}
-              stroke={hashColor(company)}
+              stroke={dartCompanyColor(company)}
               strokeWidth={2}
               dot={{ r: 4 }}
               connectNulls

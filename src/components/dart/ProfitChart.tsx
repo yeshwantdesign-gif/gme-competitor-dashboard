@@ -5,9 +5,8 @@ import {
   ResponsiveContainer, Legend,
 } from 'recharts';
 import type { DartFinancial } from '@/types';
-import { hashColor } from '@/lib/colors';
 import { useT } from '@/lib/i18n';
-import { formatKrwBillions } from './utils';
+import { formatKrwBillions, dartCompanyColor } from './utils';
 
 interface Props {
   financials: DartFinancial[];
@@ -56,7 +55,7 @@ export function ProfitChart({ financials }: Props) {
             <Bar
               key={company}
               dataKey={company}
-              fill={hashColor(company)}
+              fill={dartCompanyColor(company)}
               radius={[4, 4, 0, 0]}
             />
           ))}

@@ -6,18 +6,11 @@ import {
 } from 'recharts';
 import type { DartFinancialRatio } from '@/types';
 import { useT } from '@/lib/i18n';
+import { dartCompanyColor } from './utils';
 
 interface Props {
   ratios: DartFinancialRatio[];
 }
-
-const COMPANY_COLORS: Record<string, string> = {
-  'E9Pay': '#10B981',
-  'GMoney Transfer': '#F59E0B',
-  'Hanpass': '#8B5CF6',
-  'GME Remittance': '#3B82F6',
-  'SentBe': '#EF4444',
-};
 
 const SHORT_NAMES: Record<string, string> = {
   'E9Pay': 'E9Pay',
@@ -86,7 +79,7 @@ export function RatioCharts({ ratios }: Props) {
             <Legend wrapperStyle={{ fontSize: 11 }} />
             {shortKeys.map((key, i) => (
               <Line key={key} type="monotone" dataKey={key}
-                stroke={COMPANY_COLORS[companies[i]] || '#888'} strokeWidth={2}
+                stroke={dartCompanyColor(companies[i])} strokeWidth={2}
                 dot={{ r: 3 }} connectNulls />
             ))}
           </LineChart>
@@ -104,7 +97,7 @@ export function RatioCharts({ ratios }: Props) {
             <Legend wrapperStyle={{ fontSize: 11 }} />
             {shortKeys.map((key, i) => (
               <Line key={key} type="monotone" dataKey={key}
-                stroke={COMPANY_COLORS[companies[i]] || '#888'} strokeWidth={2}
+                stroke={dartCompanyColor(companies[i])} strokeWidth={2}
                 dot={{ r: 3 }} connectNulls />
             ))}
           </LineChart>
@@ -121,7 +114,7 @@ export function RatioCharts({ ratios }: Props) {
               contentStyle={{ backgroundColor: 'var(--card)', border: '1px solid var(--border)' }} />
             <Legend wrapperStyle={{ fontSize: 11 }} />
             {shortKeys.map((key, i) => (
-              <Bar key={key} dataKey={key} fill={COMPANY_COLORS[companies[i]] || '#888'} />
+              <Bar key={key} dataKey={key} fill={dartCompanyColor(companies[i])} />
             ))}
           </BarChart>
         </ResponsiveContainer>
@@ -137,7 +130,7 @@ export function RatioCharts({ ratios }: Props) {
               contentStyle={{ backgroundColor: 'var(--card)', border: '1px solid var(--border)' }} />
             <Legend wrapperStyle={{ fontSize: 11 }} />
             {shortKeys.map((key, i) => (
-              <Bar key={key} dataKey={key} fill={COMPANY_COLORS[companies[i]] || '#888'} />
+              <Bar key={key} dataKey={key} fill={dartCompanyColor(companies[i])} />
             ))}
           </BarChart>
         </ResponsiveContainer>

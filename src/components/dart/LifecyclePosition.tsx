@@ -7,35 +7,35 @@ const PHASES = [
     name: 'E9Pay',
     descKey: 'dart.lifecycle.e9pay',
     phase: 4,
-    color: 'bg-green-500',
+    hex: '#F59E0B',
     phaseLabel: 'Maturity',
   },
   {
     name: 'GMoney',
     descKey: 'dart.lifecycle.gmoney',
     phase: 3.5,
-    color: 'bg-yellow-500',
+    hex: '#10B981',
     phaseLabel: 'Deceleration',
   },
   {
     name: 'Hanpass',
     descKey: 'dart.lifecycle.hanpass',
     phase: 2.5,
-    color: 'bg-purple-500',
+    hex: '#1E3A8A',
     phaseLabel: 'Rapid Growth',
   },
   {
     name: 'GME',
     descKey: 'dart.lifecycle.gme',
     phase: 2.5,
-    color: 'bg-blue-500',
+    hex: '#EF4444',
     phaseLabel: 'Rapid Growth',
   },
   {
     name: 'SentBe',
     descKey: 'dart.lifecycle.sentbe',
     phase: 1.5,
-    color: 'bg-red-500',
+    hex: '#38BDF8',
     phaseLabel: 'Restructuring',
   },
 ];
@@ -64,8 +64,8 @@ export function LifecyclePosition() {
             return (
               <div
                 key={company.name}
-                className={`absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-card ${company.color}`}
-                style={{ left: `${pct}%`, transform: 'translate(-50%, -50%)' }}
+                className="absolute top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-card"
+                style={{ left: `${pct}%`, transform: 'translate(-50%, -50%)', backgroundColor: company.hex }}
                 title={company.name}
               />
             );
@@ -77,7 +77,7 @@ export function LifecyclePosition() {
       <div className="space-y-3">
         {PHASES.map((company) => (
           <div key={company.name} className="flex items-center gap-3">
-            <div className={`w-3 h-3 rounded-full flex-shrink-0 ${company.color}`} />
+            <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: company.hex }} />
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
                 <span className="font-medium text-sm">{company.name}</span>

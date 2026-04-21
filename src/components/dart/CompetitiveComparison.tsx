@@ -3,6 +3,7 @@
 import type { DartFinancialRatio } from '@/types';
 import type { DartFinancial } from '@/types';
 import { useT } from '@/lib/i18n';
+import { dartCompanyColor } from './utils';
 
 interface Props {
   ratios: DartFinancialRatio[];
@@ -87,7 +88,7 @@ export function CompetitiveComparison({ ratios, financials }: Props) {
           <tr className="border-b border-border text-left text-muted-foreground">
             <th className="pb-2 pr-4 font-medium">{t('dart.metric')}</th>
             {companies.map((name) => (
-              <th key={name} className={`pb-2 px-3 font-medium text-right ${name === 'GME Remittance' ? 'bg-blue-500/10 rounded-t' : ''}`}>
+              <th key={name} className="pb-2 px-3 font-medium text-right" style={{ borderBottom: `3px solid ${dartCompanyColor(name)}` }}>
                 {name.replace(' Remittance', '').replace(' Transfer', '')}
               </th>
             ))}
@@ -104,7 +105,7 @@ export function CompetitiveComparison({ ratios, financials }: Props) {
                   ? (m.format ? m.format(value) : value.toFixed(1))
                   : '-';
                 return (
-                  <td key={name} className={`py-2.5 px-3 text-right tabular-nums rounded ${color} ${name === 'GME Remittance' ? 'bg-blue-500/10' : ''}`}>
+                  <td key={name} className={`py-2.5 px-3 text-right tabular-nums rounded ${color}`}>
                     {formatted}
                   </td>
                 );
