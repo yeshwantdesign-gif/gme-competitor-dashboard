@@ -27,25 +27,15 @@ export default function DartPage() {
   });
   const { ratios, isLoading: ratiosLoading } = useDartRatios();
 
-  // Split financials into primary and secondary based on DART_COMPANIES config
-  const { primaryFinancials, secondaryFinancials } = useMemo(() => {
-    const primary: typeof financials = [];
-    const secondary: typeof financials = [];
-
-    for (const f of financials) {
-      const isPrimary = DART_COMPANIES.some(
+  // Filter to primary competitors only
+  const primaryFinancials = useMemo(() => {
+    return financials.filter((f) =>
+      DART_COMPANIES.some(
         (d) => d.category === 'primary' &&
                (d.searchTerms.some((term) => f.corp_name.includes(term)) ||
                 (d.stockCode && d.stockCode === f.stock_code))
-      );
-      if (isPrimary) {
-        primary.push(f);
-      } else {
-        secondary.push(f);
-      }
-    }
-
-    return { primaryFinancials: primary, secondaryFinancials: secondary };
+      )
+    );
   }, [financials]);
 
   function handleRefresh() {
@@ -86,22 +76,10 @@ export default function DartPage() {
             </section>
           )}
 
-          {/* Secondary Companies Section */}
-          {secondaryFinancials.length > 0 && (
-            <section>
-              <h2 className="text-lg font-semibold mb-4">{t('dart.secondaryCompanies')}</h2>
-              <div className="space-y-6">
-                <RevenueChart financials={secondaryFinancials} />
-                <ProfitChart financials={secondaryFinancials} />
-                <GrowthTable financials={secondaryFinancials} />
-              </div>
-            </section>
-          )}
-
-          {/* Employee Trends (all companies) */}
+          {/* Employee Trends (primary competitors) */}
           <section>
             <h2 className="text-lg font-semibold mb-4">{t('dart.employeeTrends')}</h2>
-            <EmployeeChart financials={financials} />
+            <EmployeeChart financials={primaryFinancials} />
           </section>
 
           {/* Action Plan & Strategic Analysis */}

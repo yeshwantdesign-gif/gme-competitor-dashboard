@@ -116,6 +116,8 @@ const ko: Record<string, string> = {
   'dart.operatingProfit': '영업이익',
   'dart.netIncome': '당기순이익',
   'dart.totalAssets': '자산총계',
+  'dart.totalLiabilities': '부채총계',
+  'dart.totalEquity': '자본총계',
   'dart.primaryCompetitors': '주요 경쟁사',
   'dart.secondaryCompanies': '기타 회사',
   'dart.employeeTrends': '직원 수 추이',

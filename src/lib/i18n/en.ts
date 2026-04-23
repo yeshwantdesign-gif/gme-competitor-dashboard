@@ -116,6 +116,8 @@ const en: Record<string, string> = {
   'dart.operatingProfit': 'Op. Profit',
   'dart.netIncome': 'Net Income',
   'dart.totalAssets': 'Total Assets',
+  'dart.totalLiabilities': 'Liabilities',
+  'dart.totalEquity': 'Equity',
   'dart.primaryCompetitors': 'Primary Competitors',
   'dart.secondaryCompanies': 'Secondary Companies',
   'dart.employeeTrends': 'Employee Count Trends',
