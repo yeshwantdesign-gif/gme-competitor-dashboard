@@ -78,9 +78,9 @@ export function LeverageRisk({ financials }: Props) {
           <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `${v}%`} />
           <Tooltip
             contentStyle={{ backgroundColor: 'var(--card)', border: '1px solid var(--border)' }}
-            formatter={(value, name) => [
+            formatter={(value, _name, props) => [
               `${Number(value).toFixed(1)}%`,
-              name === 'revGrowth' ? t('dart.leverage.revGrowth') : t('dart.leverage.liabGrowth'),
+              props.dataKey === 'revGrowth' ? t('dart.leverage.revGrowth') : t('dart.leverage.liabGrowth'),
             ]}
           />
           <ReferenceLine y={0} stroke="var(--muted-foreground)" strokeOpacity={0.3} />
