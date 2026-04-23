@@ -2,7 +2,7 @@
 
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, Legend, Cell, ReferenceLine,
+  ResponsiveContainer, Cell, ReferenceLine,
 } from 'recharts';
 import type { DartFinancial } from '@/types';
 import { useT } from '@/lib/i18n';
@@ -59,6 +59,18 @@ export function LeverageRisk({ financials }: Props) {
     <div className="rounded-lg border border-border bg-card p-4">
       <h3 className="mb-2 text-base font-semibold">{t('dart.leverage.title')}</h3>
 
+      {/* Custom legend */}
+      <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 mb-2 text-xs">
+        <div className="flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm bg-[#6B7280]" />
+          {t('dart.leverage.revGrowth')}
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="inline-block w-3 h-3 rounded-sm bg-[#6B7280] opacity-40" />
+          {t('dart.leverage.liabGrowth')}
+        </div>
+      </div>
+
       <ResponsiveContainer width="100%" height={350}>
         <BarChart data={data} margin={{ top: 10, right: 20, left: 10, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
@@ -66,19 +78,21 @@ export function LeverageRisk({ financials }: Props) {
           <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => `${v}%`} />
           <Tooltip
             contentStyle={{ backgroundColor: 'var(--card)', border: '1px solid var(--border)' }}
-            formatter={(value) => [`${Number(value).toFixed(1)}%`, '']}
+            formatter={(value, name) => [
+              `${Number(value).toFixed(1)}%`,
+              name === 'revGrowth' ? t('dart.leverage.revGrowth') : t('dart.leverage.liabGrowth'),
+            ]}
           />
-          <Legend wrapperStyle={{ fontSize: 11 }} />
           <ReferenceLine y={0} stroke="var(--muted-foreground)" strokeOpacity={0.3} />
 
-          <Bar dataKey="revGrowth" name={t('dart.leverage.revGrowth')} radius={[4, 4, 0, 0]}>
+          <Bar dataKey="revGrowth" name={t('dart.leverage.revGrowth')} radius={[4, 4, 0, 0]} legendType="none">
             {data.map((d, i) => (
-              <Cell key={i} fill={dartCompanyColor(d.corpName)} fillOpacity={0.8} />
+              <Cell key={i} fill={dartCompanyColor(d.corpName)} />
             ))}
           </Bar>
-          <Bar dataKey="liabGrowth" name={t('dart.leverage.liabGrowth')} radius={[4, 4, 0, 0]}>
+          <Bar dataKey="liabGrowth" name={t('dart.leverage.liabGrowth')} radius={[4, 4, 0, 0]} legendType="none">
             {data.map((d, i) => (
-              <Cell key={i} fill={d.isWarning ? '#EF4444' : dartCompanyColor(d.corpName)} fillOpacity={d.isWarning ? 0.7 : 0.4} />
+              <Cell key={i} fill={dartCompanyColor(d.corpName)} fillOpacity={0.4} />
             ))}
           </Bar>
         </BarChart>
