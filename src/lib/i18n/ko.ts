@@ -164,6 +164,67 @@ const ko: Record<string, string> = {
   'dart.action.efficiency.priority': '주의',
   'dart.action.efficiency.body': '자산회전율 0.77→0.52 하락 중 — 자산 증가가 매출 증가보다 빠름. 자본 운용 효율성 개선 필요.',
 
+  // Growth vs Profit Quadrant
+  'dart.quadrant.title': '성장성 vs 수익성 매트릭스',
+  'dart.quadrant.xAxis': '매출 성장률 (%)',
+  'dart.quadrant.yAxis': '영업이익률 (%)',
+  'dart.quadrant.star': '스타',
+  'dart.quadrant.starDesc': '높은 성장 + 높은 수익',
+  'dart.quadrant.cashCow': '캐시카우',
+  'dart.quadrant.cashCowDesc': '낮은 성장 + 높은 수익',
+  'dart.quadrant.growthBet': '성장 베팅',
+  'dart.quadrant.growthBetDesc': '높은 성장 + 낮은 수익',
+  'dart.quadrant.turnaround': '턴어라운드 필요',
+  'dart.quadrant.turnaroundDesc': '낮은 성장 + 낮은 수익',
+
+  // Revenue Convergence
+  'dart.convergence.title': '매출 수렴 예측',
+  'dart.convergence.note': '현재 성장률(GME +26%, GMoney -5.5%) 기준, GME가 2027년 GMoney 매출 추월 예상',
+  'dart.convergence.overtake': 'GME가 GMoney 추월',
+  'dart.convergence.projected': '예측 (점선 = 실적/예측 경계)',
+
+  // Margin Erosion Alert
+  'dart.marginAlert.title': 'GME 수익성 경고',
+  'dart.marginAlert.note': '현재 추세 지속 시 2027년 영업이익률 한 자릿수 진입 예상',
+
+  // Leverage Risk
+  'dart.leverage.title': '부채 증가율 vs 매출 증가율',
+  'dart.leverage.revGrowth': '매출 증가율 %',
+  'dart.leverage.liabGrowth': '부채 증가율 %',
+  'dart.leverage.gmeInsight': 'GME 부채 증가 속도가 매출의 2.3배 — 시정 없이는 지속 불가능',
+
+  // Competitive Scorecard
+  'dart.scorecard.title': '경쟁력 스코어카드',
+  'dart.scorecard.growth': '성장성',
+  'dart.scorecard.profitability': '수익성',
+  'dart.scorecard.leverage': '재무건전성',
+  'dart.scorecard.efficiency': '효율성',
+  'dart.scorecard.scale': '규모',
+
+  // E9Pay Transformation
+  'dart.e9pay.title': 'E9Pay에서 배우기: 전환 플레이북',
+  'dart.e9pay.2019loss': '영업손실 -14억',
+  'dart.e9pay.2019debt': '부채비율 174%',
+  'dart.e9pay.2025profit': '영업이익 +237억',
+  'dart.e9pay.2025debt': '부채비율 9%',
+  'dart.e9pay.years': '년',
+  'dart.e9pay.takeaway1.title': '비용 절제',
+  'dart.e9pay.takeaway1.body': '연 15%+ 성장하면서도 35%+ 마진 유지',
+  'dart.e9pay.takeaway2.title': '공격적 부채 감축',
+  'dart.e9pay.takeaway2.body': '6년 만에 부채비율 174%→9%',
+  'dart.e9pay.takeaway3.title': '규모보다 수익성',
+  'dart.e9pay.takeaway3.body': '시장점유율보다 수익성 우선',
+
+  // GMoney Opportunity
+  'dart.gmoney.title': 'GMoney 시장 기회',
+  'dart.gmoney.decline': 'GMoney 매출 감소 (역사상 최초)',
+  'dart.gmoney.lostRevenue': 'GMoney 매출 감소분 (~28.7억)',
+  'dart.gmoney.opportunity': 'GME가 이탈 물량의 10% 확보 시',
+  'dart.gmoney.insight': 'GMoney 고객 이탈 가능성 — GME 시장점유율 확보 기회의 창',
+
+  // Strategic Analysis section
+  'dart.strategicAnalysis': '전략 분석',
+
   // Lifecycle
   'dart.lifecycle.e9pay': '현금 풍부한 성숙기 핀테크, 자본 배치 단계 진입',
   'dart.lifecycle.gmoney': '성장 정점 후 둔화, 마진 압축',

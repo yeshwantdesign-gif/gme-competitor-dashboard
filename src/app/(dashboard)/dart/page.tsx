@@ -11,6 +11,13 @@ import { CompetitiveComparison } from '@/components/dart/CompetitiveComparison';
 import { RatioCharts } from '@/components/dart/RatioCharts';
 import { ActionPlanCards } from '@/components/dart/ActionPlanCards';
 import { LifecyclePosition } from '@/components/dart/LifecyclePosition';
+import { GrowthProfitQuadrant } from '@/components/dart/GrowthProfitQuadrant';
+import { RevenueConvergence } from '@/components/dart/RevenueConvergence';
+import { MarginErosionAlert } from '@/components/dart/MarginErosionAlert';
+import { LeverageRisk } from '@/components/dart/LeverageRisk';
+import { CompetitiveScorecard } from '@/components/dart/CompetitiveScorecard';
+import { E9PayTransformation } from '@/components/dart/E9PayTransformation';
+import { GMoneyOpportunity } from '@/components/dart/GMoneyOpportunity';
 import { EmptyState } from '@/components/shared/EmptyState';
 import { PageSkeleton } from '@/components/shared/PageSkeleton';
 import { RefreshButton } from '@/components/shared/RefreshButton';
@@ -81,6 +88,38 @@ export default function DartPage() {
             <h2 className="text-lg font-semibold mb-4">{t('dart.employeeTrends')}</h2>
             <EmployeeChart financials={primaryFinancials} />
           </section>
+
+          {/* Strategic Analysis (7 new sections) */}
+          {!ratiosLoading && ratios.length > 0 && (
+            <>
+              <hr className="border-border" />
+              <section>
+                <h2 className="text-xl font-bold mb-6">{t('dart.strategicAnalysis')}</h2>
+                <div className="space-y-8">
+                  {/* 1. Growth vs Profit Quadrant */}
+                  <GrowthProfitQuadrant ratios={ratios} />
+
+                  {/* 2. Revenue Convergence Forecast */}
+                  <RevenueConvergence financials={primaryFinancials} />
+
+                  {/* 3. Margin Erosion Alert */}
+                  <MarginErosionAlert ratios={ratios} />
+
+                  {/* 4. Leverage Risk */}
+                  <LeverageRisk financials={primaryFinancials} />
+
+                  {/* 5. Competitive Scorecard */}
+                  <CompetitiveScorecard ratios={ratios} financials={primaryFinancials} />
+
+                  {/* 6. E9Pay Transformation Card */}
+                  <E9PayTransformation />
+
+                  {/* 7. GMoney Market Opportunity */}
+                  <GMoneyOpportunity />
+                </div>
+              </section>
+            </>
+          )}
 
           {/* Action Plan & Strategic Analysis */}
           {!ratiosLoading && ratios.length > 0 && (

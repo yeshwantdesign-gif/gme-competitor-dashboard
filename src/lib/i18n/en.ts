@@ -164,6 +164,67 @@ const en: Record<string, string> = {
   'dart.action.efficiency.priority': 'Watch',
   'dart.action.efficiency.body': 'Asset turnover declining from 0.77 to 0.52 — assets growing faster than revenue. Improve capital deployment efficiency.',
 
+  // Growth vs Profit Quadrant
+  'dart.quadrant.title': 'Growth vs Profitability Matrix',
+  'dart.quadrant.xAxis': 'Revenue Growth (%)',
+  'dart.quadrant.yAxis': 'Operating Margin (%)',
+  'dart.quadrant.star': 'Stars',
+  'dart.quadrant.starDesc': 'High Growth + High Profit',
+  'dart.quadrant.cashCow': 'Cash Cows',
+  'dart.quadrant.cashCowDesc': 'Low Growth + High Profit',
+  'dart.quadrant.growthBet': 'Growth Bets',
+  'dart.quadrant.growthBetDesc': 'High Growth + Low Profit',
+  'dart.quadrant.turnaround': 'Turnaround Needed',
+  'dart.quadrant.turnaroundDesc': 'Low Growth + Low Profit',
+
+  // Revenue Convergence
+  'dart.convergence.title': 'Revenue Convergence Forecast',
+  'dart.convergence.note': 'At current growth rates (GME +26%, GMoney -5.5%), GME overtakes GMoney by 2027',
+  'dart.convergence.overtake': 'GME overtakes GMoney',
+  'dart.convergence.projected': 'Projected (dotted line = actual/projected boundary)',
+
+  // Margin Erosion Alert
+  'dart.marginAlert.title': 'GME Margin Trend Alert',
+  'dart.marginAlert.note': 'If current trend continues, margins reach single digits by 2027',
+
+  // Leverage Risk
+  'dart.leverage.title': 'Debt Growth vs Revenue Growth',
+  'dart.leverage.revGrowth': 'Revenue Growth %',
+  'dart.leverage.liabGrowth': 'Liability Growth %',
+  'dart.leverage.gmeInsight': "GME's debt is growing 2.3x faster than revenue — unsustainable without correction",
+
+  // Competitive Scorecard
+  'dart.scorecard.title': 'Competitive Scorecard',
+  'dart.scorecard.growth': 'Growth',
+  'dart.scorecard.profitability': 'Profitability',
+  'dart.scorecard.leverage': 'Leverage Health',
+  'dart.scorecard.efficiency': 'Efficiency',
+  'dart.scorecard.scale': 'Scale',
+
+  // E9Pay Transformation
+  'dart.e9pay.title': 'Learn from E9Pay: The Transformation Playbook',
+  'dart.e9pay.2019loss': 'Op. Loss -1.4B',
+  'dart.e9pay.2019debt': 'Debt/Equity 174%',
+  'dart.e9pay.2025profit': 'Op. Profit +23.7B',
+  'dart.e9pay.2025debt': 'Debt/Equity 9%',
+  'dart.e9pay.years': 'years',
+  'dart.e9pay.takeaway1.title': 'Cost Discipline',
+  'dart.e9pay.takeaway1.body': 'E9Pay maintained 35%+ margins while growing 15%+ annually',
+  'dart.e9pay.takeaway2.title': 'Aggressive Deleveraging',
+  'dart.e9pay.takeaway2.body': 'Reduced debt ratio from 174% to 9% in 6 years',
+  'dart.e9pay.takeaway3.title': 'Profit Before Scale',
+  'dart.e9pay.takeaway3.body': 'Prioritized profitability over market share',
+
+  // GMoney Opportunity
+  'dart.gmoney.title': 'GMoney Market Opportunity',
+  'dart.gmoney.decline': 'GMoney revenue decline (first ever)',
+  'dart.gmoney.lostRevenue': 'GMoney lost revenue (~₩2.87B decline)',
+  'dart.gmoney.opportunity': 'If GME captures 10% of displaced volume',
+  'dart.gmoney.insight': "GMoney's customers may be looking for alternatives — window of opportunity for GME to capture displaced market share",
+
+  // Strategic Analysis section
+  'dart.strategicAnalysis': 'Strategic Analysis',
+
   // Lifecycle
   'dart.lifecycle.e9pay': 'Cash-rich mature fintech, entering capital deployment phase',
   'dart.lifecycle.gmoney': 'Post-peak slowdown, margin compression',
